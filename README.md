@@ -1,2 +1,0 @@
-# shared-calendar
-Begin app
