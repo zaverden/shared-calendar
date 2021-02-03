@@ -5,7 +5,8 @@
   "scripts": {
     "watch": "node build.js --watch",
     "build": "node build.js",
-    "start": "cross-env NODE_ENV=testing npx sandbox"
+    "start": "cross-env NODE_ENV=testing npx sandbox",
+    "lint": "eslint src"
   },
   "devDependencies": {
     "@architect/sandbox": "3.3.6",
