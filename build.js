@@ -14,6 +14,7 @@ const [, , arg] = process.argv;
     outdir: "src",
     platform: "node",
     target: "node10.9.0",
+    format: "cjs",
     sourcemap: true,
     sourcesContent: true,
     watch: arg === "--watch",
