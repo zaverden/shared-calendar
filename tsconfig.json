@@ -1,0 +1,13 @@
+{
+  "extends": "@tsconfig/node10/tsconfig.json",
+  "compilerOptions": {
+    "sourceMap": true,
+    "noUncheckedIndexedAccess": true,
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "@architect/shared/*": ["src/shared/*"]
+    }
+  },
+  "exclude": ["node_modules"]
+}
