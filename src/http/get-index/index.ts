@@ -1,11 +1,20 @@
-import { HttpFunctionResponse } from "@architect/shared/begin";
+import {
+  HttpFunctionRequest,
+  HttpFunctionResponse,
+} from "@architect/shared/begin";
 // import { getData } from "@architect/shared/utils";
 
 export async function handler(
-  req: Record<string, unknown>
+  req: HttpFunctionRequest
 ): Promise<HttpFunctionResponse> {
   return {
     statusCode: 200,
-    body: JSON.stringify({ ok: true, req }),
+    body: JSON.stringify({
+      ok: true,
+      req,
+      env: {
+        QQQ: process.env.QQQ,
+      },
+    }),
   };
 }

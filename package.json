@@ -5,15 +5,16 @@
   "scripts": {
     "watch": "node build.js --watch",
     "build": "node build.js",
-    "start": "cross-env NODE_ENV=testing npx sandbox",
+    "start": "env-cmd --file local.env npx sandbox",
     "lint": "eslint src"
   },
   "devDependencies": {
     "@architect/sandbox": "3.3.6",
     "@tsconfig/node10": "1.0.7",
+    "@types/node": "10.17.51",
     "@typescript-eslint/eslint-plugin": "4.14.2",
     "@typescript-eslint/parser": "4.14.2",
-    "cross-env": "7.0.3",
+    "env-cmd": "10.1.0",
     "esbuild": "0.8.39",
     "eslint": "7.19.0",
     "eslint-config-airbnb": "18.2.1",

@@ -1,6 +1,7 @@
 .arc-env
 .DS_Store
 node_modules
+local.env
 *.js
 *.js.map
 !*.eslintrc.js

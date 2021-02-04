@@ -6,6 +6,8 @@ export type RequestContext = {
     method: string;
     path: string;
   };
+  requestId?: string;
+  domainName?: string;
 };
 
 export type HttpFunctionRequest = {

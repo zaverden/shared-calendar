@@ -3,6 +3,7 @@ begin-app
 
 @http
 get /
+get /auth/google
 
 @tables
 data

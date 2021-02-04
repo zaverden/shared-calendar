@@ -6,9 +6,9 @@ const {
 const [, , arg] = process.argv;
 
 (async () => {
-  const jsPaths = await glob("src/**/*.{js,js.map}");
+  const jsPaths = await listFiles("{js,js.map}");
   Promise.all(jsPaths.map((p) => unlink(p)));
-  const tsPaths = await glob("src/**/*.ts");
+  const tsPaths = await listFiles("ts");
   await require("esbuild").build({
     entryPoints: tsPaths,
     outdir: "src",
@@ -20,3 +20,11 @@ const [, , arg] = process.argv;
     watch: arg === "--watch",
   });
 })();
+
+/** @param {string} ext */
+async function listFiles(ext) {
+  const allPaths = await glob(`src/**/*.${ext}`);
+  const modulesPaths = await glob(`src/**/node_modules/**/*.${ext}`);
+  const modulesPathsSet = new Set(modulesPaths);
+  return allPaths.filter((p) => !modulesPathsSet.has(p));
+}
