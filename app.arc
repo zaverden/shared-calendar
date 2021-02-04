@@ -4,6 +4,7 @@ begin-app
 @http
 get /
 get /auth/google
+get /auth/google/callback
 
 @tables
 data

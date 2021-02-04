@@ -31,3 +31,9 @@ export type HttpFunctionResponse = {
   body?: string;
   isBase64Encoded?: boolean;
 };
+
+export function getBaseUrl(req: HttpFunctionRequest): string {
+  const { domainName } = req.requestContext;
+  const scheme = domainName == null ? "http://" : "https://";
+  return `${scheme}${domainName ?? "localhost:3333"}`;
+}

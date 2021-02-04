@@ -1,5 +1,6 @@
 {
   "name": "begin-app-shared",
   "dependencies": {
+    "googleapis": "67.0.0"
   }
 }
