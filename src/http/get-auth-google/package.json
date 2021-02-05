@@ -1,5 +1,5 @@
 {
-  "name": "begin-app-get-index",
+  "name": "begin-app-get-auth-google",
   "dependencies": {
     "@architect/functions": "latest",
     "@begin/data": "latest",

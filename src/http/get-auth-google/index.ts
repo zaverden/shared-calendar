@@ -4,16 +4,16 @@ import {
   redirect,
   withBaseUrl,
 } from "@architect/shared/begin";
-import { getOAuth2Client } from "@architect/shared/oAuth2Client";
+import { getAuthClient } from "@architect/shared/google/auth-client";
 
 export const handler = withBaseUrl(
   async (
     _: HttpFunctionRequest,
     baseUrl: string
   ): Promise<HttpFunctionResponse> => {
-    const authUrl = getOAuth2Client(baseUrl).generateAuthUrl({
+    const authUrl = getAuthClient(baseUrl).generateAuthUrl({
       access_type: "offline",
-      scope: ["https://www.googleapis.com/auth/calendar.app.created"],
+      scope: ["https://www.googleapis.com/auth/calendar.app.created", "openid"],
     });
 
     return redirect(authUrl);

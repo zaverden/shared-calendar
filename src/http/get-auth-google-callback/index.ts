@@ -4,7 +4,7 @@ import {
   redirect,
   withBaseUrl,
 } from "@architect/shared/begin";
-import { getOAuth2Client } from "@architect/shared/oAuth2Client";
+import { getAuthClient } from "@architect/shared/google/auth-client";
 
 export const handler = withBaseUrl(
   async (
@@ -17,12 +17,15 @@ export const handler = withBaseUrl(
       return redirect("/auth/error");
     }
 
-    const oAuth2Client = getOAuth2Client(baseUrl);
+    const oAuth2Client = getAuthClient(baseUrl);
     const { tokens } = await oAuth2Client.getToken(code);
+    const tokenInfo = await oAuth2Client.getTokenInfo(
+      tokens.access_token ?? ""
+    );
 
     return {
       statusCode: 200,
-      body: JSON.stringify(tokens),
+      body: JSON.stringify({ tokenInfo, tokens }),
     };
   }
 );
