@@ -32,10 +32,15 @@ export type HttpFunctionResponse = {
   isBase64Encoded?: boolean;
 };
 
-export function redirect(redirectTo: string): HttpFunctionResponse {
+export function redirect(
+  redirectTo: string,
+  res?: Partial<HttpFunctionResponse>
+): HttpFunctionResponse {
   return {
+    ...res,
     statusCode: 302,
     headers: {
+      ...res?.headers,
       Location: redirectTo,
     },
   };

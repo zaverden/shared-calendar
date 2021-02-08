@@ -2,11 +2,13 @@ declare module "@begin/data" {
   // this prevents implicit types exporting
   export type {};
 
-  export function get(param: GetKeyParam): Promise<BaseDocument | null>;
-  export function get(param: GetKeyParam[]): Promise<BaseDocument[]>;
+  export function get(
+    param: GetKeyParam
+  ): Promise<Document<UserDataBase> | null>;
+  export function get(param: GetKeyParam[]): Promise<Document<UserDataBase>[]>;
   export function get(
     param: GetTableParam
-  ): Promise<ArrayWithCursor<BaseDocument>>;
+  ): Promise<ArrayWithCursor<Document<UserDataBase>>>;
 
   export function set<T extends InputDocument<UserDataBase>>(
     document: T
@@ -32,7 +34,7 @@ declare module "@begin/data" {
 
   export function page(
     param: GetTableParam
-  ): Iterable<ArrayWithCursor<BaseDocument>>;
+  ): Iterable<ArrayWithCursor<Document<UserDataBase>>>;
 
   export type BaseDocument = FlattenObject<Table & Key & TTL>;
   export type Document<T extends UserDataBase> = FlattenObject<

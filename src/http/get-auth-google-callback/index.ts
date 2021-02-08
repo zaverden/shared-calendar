@@ -1,3 +1,4 @@
+import { buildJWTCookie, getJWT } from "@architect/shared/auth";
 import {
   HttpFunctionRequest,
   HttpFunctionResponse,
@@ -5,6 +6,13 @@ import {
   withBaseUrl,
 } from "@architect/shared/begin";
 import { getAuthClient } from "@architect/shared/google/auth-client";
+import {
+  getGoogleAccount,
+  GoogleAccount,
+  saveGoogleAccount,
+} from "@architect/shared/google/storage";
+import { createUser, getUser, User } from "@architect/shared/user/storage";
+import { getJWTCookieName, getJWTSecret } from "@architect/shared/utils";
 
 export const handler = withBaseUrl(
   async (
@@ -23,9 +31,47 @@ export const handler = withBaseUrl(
       tokens.access_token ?? ""
     );
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ tokenInfo, tokens }),
-    };
+    if (tokenInfo.sub === undefined) {
+      return {
+        statusCode: 403,
+        body: JSON.stringify({
+          ok: false,
+          message: "Goggle has not provided account ID",
+        }),
+      };
+    }
+
+    const user = await getUserByGoogleAccount({
+      accountId: tokenInfo.sub,
+      accessToken: tokens.access_token ?? "",
+      refreshToken: tokens.refresh_token ?? "",
+      expiryDate: tokens.expiry_date ?? 1,
+    });
+
+    const jwt = getJWT(user.userId, await getJWTSecret());
+
+    return redirect("/", {
+      cookies: [buildJWTCookie(jwt, getJWTCookieName())],
+    });
   }
 );
+
+async function getUserByGoogleAccount(
+  googleAccount: Omit<GoogleAccount, "userId">
+): Promise<User> {
+  const existingGoogleAccount = await getGoogleAccount(googleAccount.accountId);
+  let user =
+    existingGoogleAccount?.userId == null
+      ? null
+      : await getUser(existingGoogleAccount?.userId);
+  if (user == null) {
+    user = await createUser(googleAccount.accountId);
+  }
+
+  await saveGoogleAccount({
+    ...googleAccount,
+    userId: user.userId,
+  });
+
+  return user;
+}
