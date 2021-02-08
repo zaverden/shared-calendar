@@ -1,6 +1,8 @@
 import { sign, verify } from "jsonwebtoken";
+import { HttpFunctionRequest, unauthorized, WrappedHandler } from "./begin";
 import { Result } from "./result";
 import { Dictionary } from "./ts-utils";
+import { getUser, User } from "./user/storage";
 
 export function getJWT(userId: string, secret: string): string {
   const jwt = sign({ userId }, secret, {
@@ -40,7 +42,57 @@ export function resolveJWT(jwt: string, secret: string): Result<string> {
   }
 }
 
-export function buildJWTCookie(jwt: string, cookie: string): string {
+export function buildJWTCookie(jwt: string, cookieName: string): string {
   const secure = process.env.NODE_ENV === "testing" ? "" : "Secure;";
-  return `${cookie}=${jwt};${secure}HttpOnly;Path=/`;
+  return `${cookieName}=${jwt};${secure}HttpOnly;Path=/`;
+}
+
+export function getJWTFromCookies(
+  cookies: string[],
+  cookieName: string
+): string | null {
+  const prefix = `${cookieName}=`;
+  const cookie = cookies.find((c) => c.startsWith(prefix));
+  return cookie?.replace(prefix, "") ?? null;
+}
+
+async function extractUser(
+  jwtCookieName: string,
+  jwtSecret: string,
+  req: HttpFunctionRequest
+): Promise<User | null> {
+  const jwt = getJWTFromCookies(req.cookies ?? [], jwtCookieName);
+  if (jwt == null) {
+    return null;
+  }
+  const userIdResult = resolveJWT(jwt, jwtSecret);
+  if (userIdResult.success === false) {
+    return null;
+  }
+  return getUser(userIdResult.value);
+}
+
+export function withUser<T extends unknown[]>(
+  jwtCookieName: string,
+  jwtSecret: string,
+  handler: WrappedHandler<[User, ...T]>
+): WrappedHandler<T> {
+  return async (req, ...rest) => {
+    const user = await extractUser(jwtCookieName, jwtSecret, req);
+    if (user == null) {
+      return unauthorized();
+    }
+    return handler(req, user, ...rest);
+  };
+}
+
+export function withOptionalUser<T extends unknown[]>(
+  jwtCookieName: string,
+  jwtSecret: string,
+  handler: WrappedHandler<[User | null, ...T]>
+): WrappedHandler<T> {
+  return async (req, ...rest) => {
+    const user = await extractUser(jwtCookieName, jwtSecret, req);
+    return handler(req, user, ...rest);
+  };
 }

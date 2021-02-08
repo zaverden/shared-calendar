@@ -48,7 +48,7 @@ export const handler = withBaseUrl(
       expiryDate: tokens.expiry_date ?? 1,
     });
 
-    const jwt = getJWT(user.userId, await getJWTSecret());
+    const jwt = getJWT(user.userId, getJWTSecret());
 
     return redirect("/", {
       cookies: [buildJWTCookie(jwt, getJWTCookieName())],

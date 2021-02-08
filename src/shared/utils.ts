@@ -1,8 +1,8 @@
-export function getJWTSecret(): Promise<string> {
+export function getJWTSecret(): string {
   if (process.env.JWT_SECRET === undefined) {
-    return Promise.reject(new Error("JWT_SECRET is not provided"));
+    throw new Error("JWT_SECRET is not provided");
   }
-  return Promise.resolve(process.env.JWT_SECRET);
+  return process.env.JWT_SECRET;
 }
 
 export function getJWTCookieName(): string {

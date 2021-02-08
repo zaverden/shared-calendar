@@ -46,6 +46,15 @@ export function redirect(
   };
 }
 
+export function unauthorized(
+  res?: Partial<HttpFunctionResponse>
+): HttpFunctionResponse {
+  return {
+    ...res,
+    statusCode: 401,
+  };
+}
+
 export function getBaseUrl(req: HttpFunctionRequest): string {
   const { domainName } = req.requestContext;
   const scheme = domainName == null ? "http://" : "https://";
