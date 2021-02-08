@@ -4,10 +4,11 @@
     "sourceMap": true,
     "noUncheckedIndexedAccess": true,
     "moduleResolution": "node",
+    "typeRoots": ["@types", "node_modules/@types"],
     "baseUrl": ".",
     "paths": {
       "@architect/shared/*": ["src/shared/*"]
     }
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "@types"]
 }
