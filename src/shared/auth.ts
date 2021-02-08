@@ -42,5 +42,5 @@ export function resolveJWT(jwt: string, secret: string): Result<string> {
 
 export function buildJWTCookie(jwt: string, cookie: string): string {
   const secure = process.env.NODE_ENV === "testing" ? "" : "Secure;";
-  return `${cookie}=${jwt};${secure}HttpOnly;`;
+  return `${cookie}=${jwt};${secure}HttpOnly;Path=/`;
 }
