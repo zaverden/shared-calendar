@@ -24,6 +24,7 @@ export async function getGoogleAccount(
 }
 
 export async function saveGoogleAccount(account: GoogleAccount): Promise<void> {
+  console.log("Saving account", account);
   await D.set({
     table: GOOGLE_ACCOUNT_TABLE,
     key: account.accountId,
