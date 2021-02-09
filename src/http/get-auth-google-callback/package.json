@@ -1,8 +1,4 @@
 {
   "name": "begin-app-get-auth-google-callback",
-  "dependencies": {
-    "@architect/functions": "latest",
-    "@begin/data": "latest",
-    "googleapis": "67.0.0"
-  }
+  "dependencies": {}
 }
