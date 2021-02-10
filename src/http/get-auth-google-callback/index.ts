@@ -31,6 +31,8 @@ export const handler = withBaseUrl(
       tokens.access_token ?? ""
     );
 
+    console.log({ tokens, tokenInfo });
+
     if (tokenInfo.sub === undefined) {
       return {
         statusCode: 403,
@@ -41,12 +43,15 @@ export const handler = withBaseUrl(
       };
     }
 
-    const user = await getUserByGoogleAccount({
-      accountId: tokenInfo.sub,
-      accessToken: tokens.access_token ?? "",
-      refreshToken: tokens.refresh_token ?? "",
-      expiryDate: tokens.expiry_date ?? 1,
-    });
+    const user = await getUserByGoogleAccount(
+      {
+        accountId: tokenInfo.sub,
+        accessToken: tokens.access_token ?? "",
+        refreshToken: tokens.refresh_token ?? "",
+        expiryDate: tokens.expiry_date ?? 1,
+      },
+      tokenInfo.email ?? ""
+    );
 
     const jwt = getJWT(user.userId, getJWTSecret());
 
@@ -57,7 +62,8 @@ export const handler = withBaseUrl(
 );
 
 async function getUserByGoogleAccount(
-  googleAccount: Omit<GoogleAccount, "userId">
+  googleAccount: Omit<GoogleAccount, "userId">,
+  email: string
 ): Promise<User> {
   const existingGoogleAccount = await getGoogleAccount(googleAccount.accountId);
   let user =
@@ -65,7 +71,7 @@ async function getUserByGoogleAccount(
       ? null
       : await getUser(existingGoogleAccount?.userId);
   if (user == null) {
-    user = await createUser(googleAccount.accountId);
+    user = await createUser(googleAccount.accountId, email);
   }
 
   await saveGoogleAccount({

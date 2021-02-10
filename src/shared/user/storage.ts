@@ -5,6 +5,7 @@ const USER_TABLE = "USERS";
 
 const UserData = R.Record({
   googleAccountId: R.String,
+  email: R.String,
 });
 type UserData = R.Static<typeof UserData>;
 export type User = UserData & {
@@ -18,17 +19,26 @@ export async function getUser(userId: string): Promise<User | null> {
   });
   const userResult = UserData.validate(r);
   return userResult.success
-    ? { userId, googleAccountId: userResult.value.googleAccountId }
+    ? {
+        userId,
+        googleAccountId: userResult.value.googleAccountId,
+        email: userResult.value.email,
+      }
     : null;
 }
 
-export async function createUser(googleAccountId: string): Promise<User> {
+export async function createUser(
+  googleAccountId: string,
+  email: string
+): Promise<User> {
   const user = await D.set({
     table: USER_TABLE,
     googleAccountId,
+    email,
   });
   return {
     googleAccountId,
+    email,
     userId: user.key,
   };
 }
