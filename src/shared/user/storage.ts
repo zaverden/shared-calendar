@@ -1,5 +1,5 @@
-import * as R from "runtypes";
 import * as D from "@begin/data";
+import * as R from "../schema";
 
 const USER_TABLE = "USERS";
 
@@ -18,6 +18,7 @@ export async function getUser(userId: string): Promise<User | null> {
     key: userId,
   });
   const userResult = UserData.validate(r);
+  console.dir({ userResult });
   return userResult.success
     ? {
         userId,

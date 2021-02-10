@@ -5,7 +5,7 @@ import { getGoogleAccount, GoogleAccount, saveGoogleAccount } from "./storage";
 export async function authorizeGoogleApi(
   authClient: Auth.OAuth2Client,
   accountId: string
-): Promise<Result<void>> {
+): Promise<Result<null>> {
   const account = await getGoogleAccount(accountId);
   if (account == null) {
     return { success: false, message: `Unknown accountId '${accountId}'` };
@@ -25,13 +25,13 @@ export async function authorizeGoogleApi(
   google.options({
     auth: authClient,
   });
-  return { success: true };
+  return { success: true, value: null };
 }
 
 async function refreshToken(
   authClient: Auth.OAuth2Client,
   account: GoogleAccount
-): Promise<Result<void>> {
+): Promise<Result<null>> {
   try {
     const { credentials } = await authClient.refreshAccessToken();
     authClient.setCredentials(credentials);
@@ -41,7 +41,7 @@ async function refreshToken(
       refreshToken: credentials.refresh_token ?? "",
       expiryDate: credentials.expiry_date ?? Date.now(),
     });
-    return { success: true };
+    return { success: true, value: null };
   } catch (err) {
     return { success: false, message: err.message };
   }

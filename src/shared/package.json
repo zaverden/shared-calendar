@@ -3,7 +3,6 @@
   "dependencies": {
     "@begin/data": "latest",
     "googleapis": "67.0.0",
-    "jsonwebtoken": "8.5.1",
-    "runtypes": "5.0.1"
+    "jsonwebtoken": "8.5.1"
   }
 }

@@ -1,5 +1,5 @@
-import * as R from "runtypes";
 import * as D from "@begin/data";
+import * as R from "../schema";
 
 const GOOGLE_ACCOUNT_TABLE = "GOOGLE_ACCOUNT";
 
