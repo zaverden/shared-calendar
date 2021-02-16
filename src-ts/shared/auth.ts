@@ -56,12 +56,18 @@ export function getJWTFromCookies(
   return cookie?.replace(prefix, "") ?? null;
 }
 
+export function getJWTFromHeader(headers: Dictionary<string>): string | null {
+  return headers.authorization ?? headers.Authorization ?? null;
+}
+
 async function extractUser(
   jwtCookieName: string,
   jwtSecret: string,
   req: HttpFunctionRequest
 ): Promise<User | null> {
-  const jwt = getJWTFromCookies(req.cookies ?? [], jwtCookieName);
+  const jwt =
+    getJWTFromCookies(req.cookies ?? [], jwtCookieName) ??
+    getJWTFromHeader(req.headers ?? {});
   if (jwt == null) {
     return null;
   }
