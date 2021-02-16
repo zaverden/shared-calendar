@@ -74,8 +74,20 @@ async function getUserByGoogleAccount(
     user = await createUser(googleAccount.accountId, email);
   }
 
+  // https://googlecode.blogspot.com/2011/10/upcoming-changes-to-oauth-20-endpoint.html
+  // under Change #3: Server-side auto-approval
+  // > Refresh tokens are not returned for responses that were auto-approved
+  // When user authorizes for the first time, server returns a refresh token.
+  // For the second time a refresh token is omitted.
+  // Refresh tokens are not expiring so we should reuse them.
+  const refreshToken =
+    googleAccount.refreshToken === ""
+      ? existingGoogleAccount?.refreshToken ?? ""
+      : googleAccount.refreshToken;
+
   await saveGoogleAccount({
     ...googleAccount,
+    refreshToken,
     userId: user.userId,
   });
 
