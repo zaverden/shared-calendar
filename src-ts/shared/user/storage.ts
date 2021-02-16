@@ -18,7 +18,6 @@ export async function getUser(userId: string): Promise<User | null> {
     key: userId,
   });
   const userResult = UserData.validate(r);
-  console.dir({ userResult });
   return userResult.success
     ? {
         userId,

@@ -5,6 +5,7 @@ begin-app
 get /
 get /auth/google
 get /auth/google/callback
+get /api/calendars/list
 
 @tables
 data
