@@ -7,7 +7,7 @@
     "typeRoots": ["@types", "node_modules/@types"],
     "baseUrl": ".",
     "paths": {
-      "@architect/shared/*": ["src/shared/*"]
+      "@architect/shared/*": ["src-ts/shared/*"]
     }
   },
   "exclude": ["node_modules", "@types"]

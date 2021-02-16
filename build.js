@@ -6,17 +6,18 @@ const {
 const [, , arg] = process.argv;
 
 (async () => {
-  const jsPaths = await listFiles("{js,js.map}");
-  Promise.all(jsPaths.map((p) => unlink(p)));
-  const tsPaths = await listFiles("ts");
+  const tsPaths = await glob("src-ts/**/index.ts");
   await require("esbuild").build({
     entryPoints: tsPaths,
     outdir: "src",
+    outbase: "src-ts",
     platform: "node",
     target: "node10.9.0",
     format: "cjs",
+    bundle: true,
     sourcemap: true,
     sourcesContent: true,
+    minify: true,
     watch: arg === "--watch",
   });
 })();

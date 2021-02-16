@@ -6,7 +6,7 @@
     "watch": "node build.js --watch",
     "build": "node build.js",
     "start": "env-cmd --file local.env npx sandbox --port 3333",
-    "lint": "eslint src"
+    "disable_lint": "eslint src-ts"
   },
   "devDependencies": {
     "@architect/sandbox": "3.3.6",
