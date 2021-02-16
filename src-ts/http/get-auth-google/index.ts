@@ -13,6 +13,7 @@ export const handler = withBaseUrl(
   ): Promise<HttpFunctionResponse> => {
     const authUrl = getAuthClient(baseUrl).generateAuthUrl({
       access_type: "offline",
+      prompt: 'consent',
       scope: [
         "https://www.googleapis.com/auth/calendar.app.created",
         "https://www.googleapis.com/auth/calendar.calendarlist.readonly",
