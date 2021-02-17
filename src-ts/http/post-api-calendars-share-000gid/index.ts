@@ -7,12 +7,11 @@ import {
 import { authorizeGoogleApi } from "@architect/shared/google/auth";
 import { getAuthClient } from "@architect/shared/google/auth-client";
 import {
-  getCalendarsList,
   hasWritePermissionToCalendar,
 } from "@architect/shared/google/calendar";
 import { createShacal } from "@architect/shared/shacal";
 import { updateUser, User } from "@architect/shared/user/storage";
-import { getId, getJWTCookieName, getJWTSecret } from "@architect/shared/utils";
+import { getJWTCookieName, getJWTSecret } from "@architect/shared/utils";
 
 export const handler = withBaseUrl(
   withUser(

@@ -28,3 +28,10 @@ export async function createShacal(
   });
   return record.data;
 }
+
+export async function deleteShacal(publicId: string): Promise<void> {
+  await D.destroy({
+    table: SHACAL_TABLE,
+    key: publicId,
+  });
+}
