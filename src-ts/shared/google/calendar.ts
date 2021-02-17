@@ -21,3 +21,18 @@ export async function getCalendarsList(): Promise<Calendar[]> {
     })) ?? []
   );
 }
+
+export async function hasWritePermissionToCalendar(
+  googleCalendarId: string
+): Promise<boolean> {
+  const calendar = google.calendar("v3");
+  const res = await calendar.calendarList
+    .get({
+      calendarId: googleCalendarId,
+    })
+    .catch(() => ({ data: { accessRole: undefined } }));
+
+  const accessRole = res.data.accessRole;
+
+  return accessRole === "writer" || accessRole === "owner";
+}

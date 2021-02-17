@@ -33,3 +33,11 @@ export async function createUser(
   });
   return userRecord.data;
 }
+
+export async function updateUser(user: User): Promise<void> {
+  await D.set<{ data: User }>({
+    table: USER_TABLE,
+    key: user.userId,
+    data: user,
+  });
+}
