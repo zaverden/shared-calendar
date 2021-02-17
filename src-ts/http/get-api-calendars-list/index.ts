@@ -32,12 +32,17 @@ export const handler = withBaseUrl(
         };
       }
 
+      const calendars = await getCalendarsList();
+
       return {
         statusCode: 200,
         body: JSON.stringify({
           ok: true,
           user,
-          list: await getCalendarsList(),
+          list: calendars.map((calendar) => ({
+            ...calendar,
+            publicId: user.sharedCalendars[calendar.id],
+          })),
         }),
       };
     }

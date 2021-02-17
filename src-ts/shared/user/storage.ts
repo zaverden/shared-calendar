@@ -8,6 +8,7 @@ const User = R.Record({
   userId: R.String,
   googleAccountId: R.String,
   email: R.String,
+  sharedCalendars: R.Dictionary(R.String, "string"),
 });
 export type User = R.Static<typeof User>;
 
@@ -25,14 +26,10 @@ export async function createUser(
   email: string
 ): Promise<User> {
   const userId = getId();
-  const user = await D.set<{ data: User }>({
+  const userRecord = await D.set<{ data: User }>({
     table: USER_TABLE,
     key: userId,
-    data: { userId, email, googleAccountId },
+    data: { userId, email, googleAccountId, sharedCalendars: {} },
   });
-  return {
-    googleAccountId,
-    email,
-    userId: user.key,
-  };
+  return userRecord.data;
 }
