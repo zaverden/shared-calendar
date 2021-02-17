@@ -58,7 +58,7 @@ export const handler = withBaseUrl(
           }),
         };
       }
-      const { publicId } = await createShacal(user.userId, googleCalendarId);
+      const { publicId } = await createShacal(user.userId, user.googleAccountId, googleCalendarId);
       user.sharedCalendars[googleCalendarId] = publicId;
       await updateUser(user);
 

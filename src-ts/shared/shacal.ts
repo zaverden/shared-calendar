@@ -6,6 +6,7 @@ const SHACAL_TABLE = "USERS";
 const Shacal = R.Record({
   publicId: R.String,
   userId: R.String,
+  googleAccountId: R.String,
   googleCalendarId: R.String,
   addPermissionGrantedTo: R.Array(R.String),
 });
@@ -13,6 +14,7 @@ export type Shacal = R.Static<typeof Shacal>;
 
 export async function createShacal(
   userId: string,
+  googleAccountId: string,
   googleCalendarId: string
 ): Promise<Shacal> {
   const publicId = getId();
@@ -22,6 +24,7 @@ export async function createShacal(
     data: {
       publicId,
       userId,
+      googleAccountId,
       googleCalendarId,
       addPermissionGrantedTo: [],
     },
