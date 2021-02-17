@@ -1,8 +1,0 @@
-{
-  "name": "begin-app-shared",
-  "dependencies": {
-    "@begin/data": "latest",
-    "googleapis": "67.0.0",
-    "jsonwebtoken": "8.5.1"
-  }
-}

@@ -1,6 +1,6 @@
 declare module "@begin/data" {
-  // this prevents implicit types exporting
-  export type {};
+  // this prevents implicit exporting
+  export {};
 
   export function get(
     param: GetKeyParam
@@ -10,11 +10,11 @@ declare module "@begin/data" {
     param: GetTableParam
   ): Promise<ArrayWithCursor<Document<UserDataBase>>>;
 
-  export function set<T extends InputDocument<UserDataBase>>(
-    document: T
+  export function set<T extends UserDataBase>(
+    document: InputDocument<T>
   ): Promise<Document<T>>;
-  export function set<T extends InputDocument<UserDataBase>>(
-    document: T[]
+  export function set<T extends UserDataBase>(
+    document: InputDocument<T>[]
   ): Promise<Document<T>[]>;
 
   export function destroy(document: BaseDocument): Promise<Dictionary<never>>;
@@ -39,6 +39,9 @@ declare module "@begin/data" {
   export type BaseDocument = FlattenObject<Table & Key & TTL>;
   export type Document<T extends UserDataBase> = FlattenObject<
     T & BaseDocument
+  >;
+  export type InputDocument<T extends UserDataBase> = FlattenObject<
+    Table & Partial<Key> & TTL & T
   >;
 
   export type AllowedUserDataType =
@@ -93,10 +96,6 @@ declare module "@begin/data" {
      * */
     ttl?: number;
   };
-
-  type InputDocument<T extends UserDataBase> = FlattenObject<
-    Table & Partial<Key> & TTL & T
-  >;
 
   type GetKeyParam = FlattenObject<Table & Key>;
 

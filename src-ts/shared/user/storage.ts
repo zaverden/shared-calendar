@@ -1,40 +1,34 @@
 import * as D from "@begin/data";
-import * as R from "../schema";
+import * as R from "runtypes";
+import { getId } from "../utils";
 
 const USER_TABLE = "USERS";
 
-const UserData = R.Record({
+const User = R.Record({
+  userId: R.String,
   googleAccountId: R.String,
   email: R.String,
 });
-type UserData = R.Static<typeof UserData>;
-export type User = UserData & {
-  userId: string;
-};
+export type User = R.Static<typeof User>;
 
 export async function getUser(userId: string): Promise<User | null> {
   const r = await D.get({
     table: USER_TABLE,
     key: userId,
   });
-  const userResult = UserData.validate(r);
-  return userResult.success
-    ? {
-        userId,
-        googleAccountId: userResult.value.googleAccountId,
-        email: userResult.value.email,
-      }
-    : null;
+  const userResult = User.validate(r?.data);
+  return userResult.success ? userResult.value : null;
 }
 
 export async function createUser(
   googleAccountId: string,
   email: string
 ): Promise<User> {
-  const user = await D.set({
+  const userId = getId();
+  const user = await D.set<{ data: User }>({
     table: USER_TABLE,
-    googleAccountId,
-    email,
+    key: userId,
+    data: { userId, email, googleAccountId },
   });
   return {
     googleAccountId,

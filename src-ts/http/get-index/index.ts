@@ -39,9 +39,6 @@ export const handler = withBaseUrl(
           ok: true,
           req,
           user,
-          env: {
-            QQQ: process.env.QQQ,
-          },
         }),
       };
     }
