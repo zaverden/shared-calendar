@@ -16,3 +16,13 @@ export function getId(): string {
   const rndPart = rnd.toString(16).padStart(8, "0");
   return datePart + rndPart;
 }
+
+export function emailMatch(email: string, list: string[]): boolean {
+  const lastAt = email.lastIndexOf("@");
+  const domainName = email.substring(lastAt);
+  return list.includes(email) || list.includes(domainName);
+}
+
+export function getTTL(date: Date): number {
+  return Math.trunc(date.getTime() / 1000)
+}

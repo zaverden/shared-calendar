@@ -14,7 +14,7 @@ export const handler = withBaseUrl(
     const authUrl = getAuthClient(baseUrl).generateAuthUrl({
       access_type: "offline",
       scope: [
-        "https://www.googleapis.com/auth/calendar.app.created",
+        "https://www.googleapis.com/auth/calendar.events",
         "https://www.googleapis.com/auth/calendar.calendarlist.readonly",
         "https://www.googleapis.com/auth/userinfo.email",
         "openid",

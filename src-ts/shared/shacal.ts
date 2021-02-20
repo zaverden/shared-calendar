@@ -32,6 +32,15 @@ export async function createShacal(
   return record.data;
 }
 
+export async function getShacal(publicId: string): Promise<Shacal | null> {
+  const r = await D.get({
+    table: SHACAL_TABLE,
+    key: publicId,
+  });
+  const shacalResult = Shacal.validate(r?.data);
+  return shacalResult.success ? shacalResult.value : null;
+}
+
 export async function deleteShacal(publicId: string): Promise<void> {
   await D.destroy({
     table: SHACAL_TABLE,
