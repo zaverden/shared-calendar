@@ -1,4 +1,4 @@
-import { google } from "googleapis";
+import { calendar_v3, google } from "googleapis";
 
 export type Calendar = {
   id: string;
@@ -45,6 +45,16 @@ export async function hasWritePermissionToCalendar(
   return accessRole === "writer" || accessRole === "owner";
 }
 
+function buildCalendarEvent(rawEvent: calendar_v3.Schema$Event): CalendarEvent {
+  return {
+    id: rawEvent.id!,
+    summary: rawEvent.summary ?? "",
+    description: rawEvent.description ?? "",
+    start: rawEvent.start?.dateTime!,
+    end: rawEvent.end?.dateTime!,
+  };
+}
+
 export async function getFollowingEvents(
   googleCalendarId: string
 ): Promise<CalendarEvent[]> {
@@ -60,12 +70,22 @@ export async function getFollowingEvents(
   return (
     res.data.items
       ?.filter(({ start }) => start?.dateTime != null) // exclude whole day events
-      .map((it) => ({
-        id: it.id!,
-        summary: it.summary ?? "",
-        description: it.description ?? "",
-        start: it.start?.dateTime!,
-        end: it.end?.dateTime!,
-      })) ?? []
+      .map(buildCalendarEvent) ?? []
   );
+}
+
+export async function getEvent(
+  googleCalendarId: string,
+  googleEventId: string
+): Promise<CalendarEvent | null> {
+  const calendar = google.calendar("v3");
+  const res = await calendar.events.get({
+    calendarId: googleCalendarId,
+    eventId: googleEventId,
+    timeZone: "UTC",
+  });
+  if (res.data.status === "cancelled") {
+    return null;
+  }
+  return buildCalendarEvent(res.data);
 }

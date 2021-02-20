@@ -18,6 +18,7 @@ const EVENT_TABLE = "EVENTS";
 const ShacalEvent = R.Record({
   publicId: R.String,
   userId: R.String,
+  shacalUserId: R.String,
   googleEventId: R.String,
   googleAccountId: R.String,
   googleCalendarId: R.String,
@@ -89,6 +90,7 @@ function buildShacalEventDocument(
       publicId,
       userId,
       googleEventId,
+      shacalUserId: shacal.userId,
       googleAccountId: shacal.googleAccountId,
       googleCalendarId: shacal.googleCalendarId,
     },
@@ -172,6 +174,7 @@ export async function ensureEvents(
   }
 
   console.log(EVENT_MAP_TABLE, await D.count({ table: EVENT_MAP_TABLE }));
+  console.log(EVENT_TABLE, await D.count({ table: EVENT_TABLE }));
 
   const eventMaps = await getEventMaps(googleEvents.map(({ id }) => id));
   const savedEvents = await addMissingEvents(googleEvents, eventMaps, shacal);
@@ -194,4 +197,15 @@ export async function ensureEvents(
       eventMaps.get(event.id)?.userId === currentUserId,
   }));
   return events;
+}
+
+export async function getShacalEvent(
+  publicId: string
+): Promise<ShacalEvent | null> {
+  const r = await D.get({
+    table: EVENT_TABLE,
+    key: publicId,
+  });
+  const result = ShacalEvent.validate(r?.data);
+  return result.success ? result.value : null;
 }

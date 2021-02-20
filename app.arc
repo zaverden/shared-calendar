@@ -5,6 +5,7 @@ begin-app
 get /
 get /auth/google
 get /auth/google/callback
+get /api/event/:publicId
 get /api/calendars/list
 get /api/calendars/shared/:publicId
 post /api/calendars/share/:gid
