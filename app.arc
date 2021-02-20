@@ -2,7 +2,6 @@
 begin-app
 
 @http
-get /
 get /auth/google
 get /auth/google/callback
 get /api/event/:publicId
@@ -16,3 +15,7 @@ data
   scopeID *String
   dataID **String
   ttl TTL
+
+@static
+folder public
+spa true
