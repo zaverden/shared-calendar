@@ -36,14 +36,12 @@ export const handler = withBaseUrl(
 
       return {
         statusCode: 200,
-        body: JSON.stringify({
-          ok: true,
-          user,
-          list: calendars.map((calendar) => ({
+        body: JSON.stringify(
+          calendars.map((calendar) => ({
             ...calendar,
             publicId: user.sharedCalendars[calendar.id],
-          })),
-        }),
+          }))
+        ),
       };
     }
   )
