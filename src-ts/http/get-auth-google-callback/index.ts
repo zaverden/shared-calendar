@@ -12,14 +12,18 @@ import {
   saveGoogleAccount,
 } from "@architect/shared/google/storage";
 import { createUser, getUser, User } from "@architect/shared/user/storage";
-import { getJWTCookieName, getJWTSecret } from "@architect/shared/utils";
+import {
+  getJWTCookieName,
+  getJWTSecret,
+  sanitizeReturnUrl,
+} from "@architect/shared/utils";
 
 export const handler = withBaseUrl(
   async (
     req: HttpFunctionRequest,
     baseUrl: string
   ): Promise<HttpFunctionResponse> => {
-    const { code } = req.queryStringParameters ?? {};
+    const { code, state: returnUrl } = req.queryStringParameters ?? {};
 
     if (code === undefined) {
       return redirect("/auth/error");
@@ -55,7 +59,7 @@ export const handler = withBaseUrl(
 
     const jwt = getJWT(user.userId, getJWTSecret());
 
-    return redirect("/", {
+    return redirect(sanitizeReturnUrl(returnUrl), {
       cookies: [buildJWTCookie(jwt, getJWTCookieName())],
     });
   }

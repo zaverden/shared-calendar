@@ -24,5 +24,15 @@ export function emailMatch(email: string, list: string[]): boolean {
 }
 
 export function getTTL(date: Date): number {
-  return Math.trunc(date.getTime() / 1000)
+  return Math.trunc(date.getTime() / 1000);
+}
+
+export function sanitizeReturnUrl(url: string | undefined | null): string {
+  if (url == null) {
+    return "/";
+  }
+  if (!url.startsWith("/")) {
+    return "/";
+  }
+  return url;
 }

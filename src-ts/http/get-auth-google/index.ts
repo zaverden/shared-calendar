@@ -5,12 +5,14 @@ import {
   withBaseUrl,
 } from "@architect/shared/begin";
 import { getAuthClient } from "@architect/shared/google/auth-client";
+import { sanitizeReturnUrl } from "@architect/shared/utils";
 
 export const handler = withBaseUrl(
   async (
-    _: HttpFunctionRequest,
+    req: HttpFunctionRequest,
     baseUrl: string
   ): Promise<HttpFunctionResponse> => {
+    const returnUrl = req.queryStringParameters?.r;
     const authUrl = getAuthClient(baseUrl).generateAuthUrl({
       access_type: "offline",
       scope: [
@@ -19,6 +21,7 @@ export const handler = withBaseUrl(
         "https://www.googleapis.com/auth/userinfo.email",
         "openid",
       ],
+      state: sanitizeReturnUrl(returnUrl),
     });
 
     return redirect(authUrl);
