@@ -1,10 +1,11 @@
-import { buildJWTCookie, getJWT } from "@architect/shared/auth";
+import { buildAuthCookie, buildAuthToken } from "@architect/shared/auth";
 import {
   HttpFunctionRequest,
   HttpFunctionResponse,
   redirect,
   withBaseUrl,
 } from "@architect/shared/begin";
+import { buildConfirmedEmailsCookie } from "@architect/shared/confirmed-emails";
 import { getAuthClient } from "@architect/shared/google/auth-client";
 import {
   getGoogleAccount,
@@ -13,10 +14,12 @@ import {
 } from "@architect/shared/google/storage";
 import { createUser, getUser, User } from "@architect/shared/user/storage";
 import {
+  getConfirmedEmailsCookieName,
   getJWTCookieName,
   getJWTSecret,
   sanitizeReturnUrl,
 } from "@architect/shared/utils";
+import { URL } from "url";
 
 export const handler = withBaseUrl(
   async (
@@ -57,10 +60,19 @@ export const handler = withBaseUrl(
       tokenInfo.email ?? ""
     );
 
-    const jwt = getJWT(user.userId, getJWTSecret());
+    const jwt = buildAuthToken(user.userId, getJWTSecret());
+    const emailToken = buildConfirmedEmailsCookie(
+      [user.email],
+      getConfirmedEmailsCookieName(),
+      getJWTSecret()
+    );
 
-    return redirect(sanitizeReturnUrl(returnUrl), {
-      cookies: [buildJWTCookie(jwt, getJWTCookieName())],
+    const url = new URL("/auth/email/callback", "https://fake");
+    url.searchParams.append("t", emailToken);
+    url.searchParams.append("r", sanitizeReturnUrl(returnUrl));
+
+    return redirect(url.pathname + url.search, {
+      cookies: [buildAuthCookie(jwt, getJWTCookieName())],
     });
   }
 );

@@ -15,17 +15,8 @@ const [, , arg] = process.argv;
     target: "node10.9.0",
     format: "cjs",
     bundle: true,
-    sourcemap: true,
-    sourcesContent: true,
+    sourcemap: 'inline',
     minify: true,
     watch: arg === "--watch",
   });
 })();
-
-/** @param {string} ext */
-async function listFiles(ext) {
-  const allPaths = await glob(`src/**/*.${ext}`);
-  const modulesPaths = await glob(`src/**/node_modules/**/*.${ext}`);
-  const modulesPathsSet = new Set(modulesPaths);
-  return allPaths.filter((p) => !modulesPathsSet.has(p));
-}

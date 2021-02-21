@@ -4,6 +4,7 @@ begin-app
 @http
 get /auth/google
 get /auth/google/callback
+get /auth/email/callback
 get /api/event/:publicId
 get /api/calendars/list
 get /api/calendars/shared/:publicId

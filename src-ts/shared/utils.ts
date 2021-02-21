@@ -9,6 +9,10 @@ export function getJWTCookieName(): string {
   return process.env.JWT_COOKIE ?? "auth";
 }
 
+export function getConfirmedEmailsCookieName(): string {
+  return process.env.EMAILS_COOKIE ?? "emails";
+}
+
 const RND_LIMIT = 2 ** 32;
 export function getId(): string {
   const datePart = Date.now().toString(16);
@@ -35,4 +39,13 @@ export function sanitizeReturnUrl(url: string | undefined | null): string {
     return "/";
   }
   return url;
+}
+
+export function getCookieValue(
+  cookies: string[],
+  cookieName: string
+): string | null {
+  const prefix = `${cookieName}=`;
+  const cookie = cookies.find((c) => c.startsWith(prefix));
+  return cookie?.replace(prefix, "") ?? null;
 }

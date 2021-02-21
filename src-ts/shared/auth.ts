@@ -3,8 +3,9 @@ import { HttpFunctionRequest, unauthorized, WrappedHandler } from "./begin";
 import { Result } from "./result";
 import { Dictionary } from "./ts-utils";
 import { getUser, User } from "./user/storage";
+import { getCookieValue } from "./utils";
 
-export function getJWT(userId: string, secret: string): string {
+export function buildAuthToken(userId: string, secret: string): string {
   const jwt = sign({ userId }, secret, {
     expiresIn: "1d",
   });
@@ -14,7 +15,7 @@ export function getJWT(userId: string, secret: string): string {
   return jwt;
 }
 
-export function resolveJWT(jwt: string, secret: string): Result<string> {
+function resolveJWT(jwt: string, secret: string): Result<string> {
   try {
     const payload = verify(jwt, secret);
     if (typeof payload !== "object") {
@@ -42,21 +43,13 @@ export function resolveJWT(jwt: string, secret: string): Result<string> {
   }
 }
 
-export function buildJWTCookie(jwt: string, cookieName: string): string {
+const authCookieAge = `Max-Age=${24 * 60 * 60}`;
+export function buildAuthCookie(jwt: string, cookieName: string): string {
   const secure = process.env.NODE_ENV === "testing" ? "" : "Secure;";
-  return `${cookieName}=${jwt};${secure}HttpOnly;Path=/`;
+  return `${cookieName}=${jwt};${authCookieAge};${secure}HttpOnly;Path=/`;
 }
 
-export function getJWTFromCookies(
-  cookies: string[],
-  cookieName: string
-): string | null {
-  const prefix = `${cookieName}=`;
-  const cookie = cookies.find((c) => c.startsWith(prefix));
-  return cookie?.replace(prefix, "") ?? null;
-}
-
-export function getJWTFromHeader(headers: Dictionary<string>): string | null {
+function getJWTFromHeader(headers: Dictionary<string>): string | null {
   return headers.authorization ?? headers.Authorization ?? null;
 }
 
@@ -66,7 +59,7 @@ async function extractUser(
   req: HttpFunctionRequest
 ): Promise<User | null> {
   const jwt =
-    getJWTFromCookies(req.cookies ?? [], jwtCookieName) ??
+    getCookieValue(req.cookies ?? [], jwtCookieName) ??
     getJWTFromHeader(req.headers ?? {});
   if (jwt == null) {
     return null;
