@@ -27,7 +27,6 @@ export const handler = withBaseUrl(
     ): Promise<HttpFunctionResponse> => {
       const publicId = req.pathParameters?.publicId ?? "-";
       const shacalEvent = await getShacalEvent(publicId);
-      console.log(publicId, shacalEvent);
 
       if (shacalEvent == null) {
         return { statusCode: 404 };

@@ -173,9 +173,6 @@ export async function ensureEvents(
     return [];
   }
 
-  console.log(EVENT_MAP_TABLE, await D.count({ table: EVENT_MAP_TABLE }));
-  console.log(EVENT_TABLE, await D.count({ table: EVENT_TABLE }));
-
   const eventMaps = await getEventMaps(googleEvents.map(({ id }) => id));
   const savedEvents = await addMissingEvents(googleEvents, eventMaps, shacal);
   savedEvents.forEach(({ googleEventId, publicId }) =>
