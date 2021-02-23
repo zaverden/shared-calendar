@@ -7,12 +7,17 @@ export type Calendar = {
   color: string;
 };
 
+export type CalendarEventAttendee = {
+  email: string;
+  status: "declined" | "tentative" | "accepted";
+};
 export type CalendarEvent = {
   id: string;
   summary: string;
   description: string;
   start: string;
   end: string;
+  attendees: CalendarEventAttendee[];
 };
 
 export async function getCalendarsList(): Promise<Calendar[]> {
@@ -52,6 +57,15 @@ function buildCalendarEvent(rawEvent: calendar_v3.Schema$Event): CalendarEvent {
     description: rawEvent.description ?? "",
     start: rawEvent.start?.dateTime!,
     end: rawEvent.end?.dateTime!,
+    attendees:
+      rawEvent.attendees
+        ?.filter(
+          ({ email, responseStatus }) => email != null && responseStatus != null
+        )
+        .map(({ email, responseStatus }) => ({
+          email: email!,
+          status: responseStatus as "declined" | "tentative" | "accepted",
+        })) ?? [],
   };
 }
 
@@ -61,6 +75,7 @@ export async function getFollowingEvents(
   const calendar = google.calendar("v3");
   const res = await calendar.events.list({
     calendarId: googleCalendarId,
+    maxAttendees: 100,
     orderBy: "startTime",
     singleEvents: true,
     timeMin: new Date().toISOString(),
@@ -82,6 +97,7 @@ export async function getEvent(
   const res = await calendar.events.get({
     calendarId: googleCalendarId,
     eventId: googleEventId,
+    maxAttendees: 100,
     timeZone: "UTC",
   });
   if (res.data.status === "cancelled") {

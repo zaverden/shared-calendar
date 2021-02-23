@@ -130,6 +130,7 @@ export type PublicEvent = AssignFields<
   {
     publicId: string;
     owned: boolean;
+    attendees?: CalendarEvent["attendees"];
   }
 >;
 
@@ -183,16 +184,20 @@ export async function ensureEvents(
     })
   );
 
-  const events = googleEvents.map((event) => ({
-    publicId: eventMaps.get(event.id)?.publicId!,
-    summary: event.summary,
-    description: event.description,
-    start: event.start,
-    end: event.end,
-    owned:
+  const events = googleEvents.map((event) => {
+    const owned =
       shacal.userId === currentUserId ||
-      eventMaps.get(event.id)?.userId === currentUserId,
-  }));
+      eventMaps.get(event.id)?.userId === currentUserId;
+    return {
+      publicId: eventMaps.get(event.id)?.publicId!,
+      summary: event.summary,
+      description: event.description,
+      start: event.start,
+      end: event.end,
+      owned: owned,
+      attendees: owned ? event.attendees : undefined,
+    };
+  });
   return events;
 }
 

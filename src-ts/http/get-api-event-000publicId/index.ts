@@ -6,15 +6,10 @@ import {
 } from "@architect/shared/begin";
 import { authorizeGoogleApi } from "@architect/shared/google/auth";
 import { getAuthClient } from "@architect/shared/google/auth-client";
-import {
-  getEvent,
-} from "@architect/shared/google/calendar";
+import { getEvent } from "@architect/shared/google/calendar";
 import { getShacalEvent } from "@architect/shared/shacal-events";
 import { User } from "@architect/shared/user/storage";
-import {
-  getJWTCookieName,
-  getJWTSecret,
-} from "@architect/shared/utils";
+import { getJWTCookieName, getJWTSecret } from "@architect/shared/utils";
 
 export const handler = withBaseUrl(
   withOptionalUser(
@@ -53,15 +48,18 @@ export const handler = withBaseUrl(
         return { statusCode: 404 };
       }
 
+      const owned =
+        shacalEvent.shacalUserId === user?.userId ||
+        shacalEvent.userId === user?.userId;
+
       const event = {
         publicId,
+        owned,
         summary: rawEvent.summary,
         description: rawEvent.description,
         start: rawEvent.start,
         end: rawEvent.end,
-        owned:
-          shacalEvent.shacalUserId === user?.userId ||
-          shacalEvent.userId === user?.userId,
+        attendees: owned ? rawEvent.attendees : undefined,
       };
 
       return {
