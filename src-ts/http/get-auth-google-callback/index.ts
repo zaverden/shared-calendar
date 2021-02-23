@@ -5,7 +5,7 @@ import {
   redirect,
   withBaseUrl,
 } from "@architect/shared/begin";
-import { buildConfirmedEmailsCookie } from "@architect/shared/confirmed-emails";
+import { buildConfirmedEmailsToken } from "@architect/shared/confirmed-emails";
 import { getAuthClient } from "@architect/shared/google/auth-client";
 import {
   getGoogleAccount,
@@ -14,7 +14,6 @@ import {
 } from "@architect/shared/google/storage";
 import { createUser, getUser, User } from "@architect/shared/user/storage";
 import {
-  getConfirmedEmailsCookieName,
   getJWTCookieName,
   getJWTSecret,
   sanitizeReturnUrl,
@@ -38,8 +37,6 @@ export const handler = withBaseUrl(
       tokens.access_token ?? ""
     );
 
-    console.log({ tokens, tokenInfo });
-
     if (tokenInfo.sub === undefined) {
       return {
         statusCode: 403,
@@ -61,9 +58,8 @@ export const handler = withBaseUrl(
     );
 
     const jwt = buildAuthToken(user.userId, getJWTSecret());
-    const emailToken = buildConfirmedEmailsCookie(
+    const emailToken = buildConfirmedEmailsToken(
       [user.email],
-      getConfirmedEmailsCookieName(),
       getJWTSecret()
     );
 

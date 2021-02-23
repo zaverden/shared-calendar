@@ -12,7 +12,10 @@ function getJWTFromHeader(headers: Dictionary<string>): string | null {
   return headers["x-email"] ?? headers["X-Email"] ?? headers["X-email"] ?? null;
 }
 
-export function extractConfirmedEmailsFromJWT(jwt: string, secret: string): string[] {
+export function extractConfirmedEmailsFromJWT(
+  jwt: string,
+  secret: string
+): string[] {
   try {
     const payload = verify(jwt, secret);
     const result = EmailsTokenPayload.validate(payload);
@@ -52,9 +55,8 @@ export function buildConfirmedEmailsToken(
   emails: string[],
   secret: string
 ): string {
-  const jwt = sign({ emails }, secret, {
-    expiresIn: "1y",
-  });
+  const emailsSet = new Set(emails.map((email) => email.toLowerCase()));
+  const jwt = sign({ emails: [...emailsSet] }, secret, { expiresIn: "1y" });
   if (jwt == null) {
     throw new Error("Empty JWT is generated");
   }
