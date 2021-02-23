@@ -3,9 +3,9 @@ import {
   HttpFunctionResponse,
   redirect,
   withBaseUrl,
-} from "@architect/shared/begin";
-import { getAuthClient } from "@architect/shared/google/auth-client";
-import { sanitizeReturnUrl } from "@architect/shared/utils";
+} from "../begin";
+import { getAuthClient } from "../google/auth-client";
+import { sanitizeReturnUrl } from "../utils";
 
 export const handler = withBaseUrl(
   async (
