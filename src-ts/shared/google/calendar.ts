@@ -1,4 +1,5 @@
 import { calendar_v3, google } from "googleapis";
+import { Result } from "../result";
 
 export type Calendar = {
   id: string;
@@ -104,4 +105,41 @@ export async function getEvent(
     return null;
   }
   return buildCalendarEvent(res.data);
+}
+
+export async function addAttendee(
+  googleCalendarId: string,
+  googleEventId: string,
+  email: string
+): Promise<Result<null>> {
+  const calendar = google.calendar("v3");
+  const eventRes = await calendar.events.get({
+    calendarId: googleCalendarId,
+    eventId: googleEventId,
+    maxAttendees: 100,
+    timeZone: "UTC",
+  });
+  if (eventRes.data.status === "cancelled") {
+    return { success: false, message: "Event not found" };
+  }
+
+  const attendees = [
+    ...(eventRes.data.attendees ?? []),
+    {
+      email,
+      responseStatus: "accepted",
+    },
+  ];
+  const patchRes = await calendar.events.patch({
+    calendarId: googleCalendarId,
+    eventId: googleEventId,
+    requestBody: { attendees },
+    sendUpdates: "all",
+  });
+  if (200 <= patchRes.status && patchRes.status <= 299) {
+    return { success: true, value: null };
+  }
+
+  console.log("addAttendee patch error", patchRes);
+  return { success: false, message: `Patch failed with ${patchRes.status}` };
 }
