@@ -162,7 +162,7 @@ async function addMissingEvents(
     googleEventId,
     eventEnd: missingEventsEndMap.get(googleEventId)!,
   }));
-  await createEventMapsBatch(mapsData, shacal.userId);
+  await createEventMapsBatch(mapsData, ownerId);
   return savedEvents;
 }
 
@@ -177,12 +177,17 @@ export async function ensureEvents(
   }
 
   const eventMaps = await getEventMaps(googleEvents.map(({ id }) => id));
-  const savedEvents = await addMissingEvents(googleEvents, eventMaps, shacal, missingEventsOwnerId);
-  savedEvents.forEach(({ googleEventId, publicId }) =>
+  const savedEvents = await addMissingEvents(
+    googleEvents,
+    eventMaps,
+    shacal,
+    missingEventsOwnerId
+  );
+  savedEvents.forEach(({ googleEventId, publicId, userId }) =>
     eventMaps.set(googleEventId, {
       publicId,
       googleEventId,
-      userId: shacal.userId,
+      userId,
     })
   );
 
