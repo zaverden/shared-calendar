@@ -9,6 +9,7 @@ get /api/event/:publicId
 post /api/event/:publicId/join
 get /api/calendars/list
 get /api/calendars/shared/:publicId
+put /api/calendars/shared/:publicId/add-permissions
 post /api/calendars/share/:gid
 delete /api/calendars/share/:gid
 

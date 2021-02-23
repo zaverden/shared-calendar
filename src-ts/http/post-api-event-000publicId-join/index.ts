@@ -29,7 +29,6 @@ export const handler = withBaseUrl(
       baseUrl: string
     ): Promise<HttpFunctionResponse> => {
       const jsonResult = parseJsonBody(req.body);
-
       if (!jsonResult.success) {
         return { statusCode: 400, body: JSON.stringify(jsonResult) };
       }

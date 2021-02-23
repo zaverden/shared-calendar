@@ -47,3 +47,12 @@ export async function deleteShacal(publicId: string): Promise<void> {
     key: publicId,
   });
 }
+
+export async function replaceShacal(shacal: Shacal): Promise<Shacal> {
+  const record = await D.set<{ data: Shacal }>({
+    table: SHACAL_TABLE,
+    key: shacal.publicId,
+    data: shacal,
+  });
+  return record.data;
+}

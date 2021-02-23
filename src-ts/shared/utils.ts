@@ -22,8 +22,9 @@ export function getId(): string {
 }
 
 export function emailMatch(email: string, list: string[]): boolean {
+  email = email.toLowerCase();
   const lastAt = email.lastIndexOf("@");
-  const domainName = email.substring(lastAt);
+  const domainName = email.substring(lastAt); // including @
   return list.includes(email) || list.includes(domainName);
 }
 
