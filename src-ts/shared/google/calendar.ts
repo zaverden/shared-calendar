@@ -76,7 +76,6 @@ export async function getFollowingEvents(
   const calendar = google.calendar("v3");
   const res = await calendar.events.list({
     calendarId: googleCalendarId,
-    maxAttendees: 100,
     orderBy: "startTime",
     singleEvents: true,
     timeMin: new Date().toISOString(),
@@ -98,7 +97,6 @@ export async function getEvent(
   const res = await calendar.events.get({
     calendarId: googleCalendarId,
     eventId: googleEventId,
-    maxAttendees: 100,
     timeZone: "UTC",
   });
   if (res.data.status === "cancelled") {
@@ -116,7 +114,6 @@ export async function addAttendee(
   const eventRes = await calendar.events.get({
     calendarId: googleCalendarId,
     eventId: googleEventId,
-    maxAttendees: 100,
     timeZone: "UTC",
   });
   if (eventRes.data.status === "cancelled") {
