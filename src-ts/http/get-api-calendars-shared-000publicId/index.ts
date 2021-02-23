@@ -49,7 +49,8 @@ export const handler = withBaseUrl(
       const ensuredEvents = await ensureEvents(
         rawEvents,
         shacal,
-        user?.userId ?? null
+        user?.userId ?? null,
+        shacal.userId
       );
 
       return {

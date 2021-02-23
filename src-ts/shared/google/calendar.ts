@@ -1,3 +1,4 @@
+import * as R from "runtypes";
 import { calendar_v3, google } from "googleapis";
 import { Result } from "../result";
 
@@ -140,5 +141,77 @@ export async function addAttendee(
   }
 
   console.log("addAttendee patch error", patchRes);
+  return { success: false, message: `Patch failed with ${patchRes.status}` };
+}
+
+export const EventPayload = R.Record({
+  summary: R.String,
+  description: R.String,
+  start: R.String,
+  end: R.String,
+  location: R.String,
+});
+export type EventPayload = R.Static<typeof EventPayload>;
+
+export async function insertEvent(
+  googleCalendarId: string,
+  eventPayload: EventPayload
+): Promise<Result<CalendarEvent>> {
+  const calendar = google.calendar("v3");
+  const insertRes = await calendar.events.insert({
+    calendarId: googleCalendarId,
+    requestBody: {
+      summary: eventPayload.summary,
+      description: eventPayload.description,
+      location: eventPayload.location,
+      start: {
+        dateTime: eventPayload.start,
+      },
+      end: {
+        dateTime: eventPayload.end,
+      },
+      guestsCanInviteOthers: false,
+      guestsCanModify: false,
+      guestsCanSeeOtherGuests: false,
+    },
+  });
+
+  if (200 <= insertRes.status && insertRes.status <= 299) {
+    return { success: true, value: buildCalendarEvent(insertRes.data) };
+  }
+  console.log("insertEvent error", insertRes);
+  return { success: false, message: `Insert failed with ${insertRes.status}` };
+}
+
+export async function updateEvent(
+  googleCalendarId: string,
+  googleEventId: string,
+  eventPayload: EventPayload
+): Promise<Result<CalendarEvent>> {
+  const calendar = google.calendar("v3");
+  const patchRes = await calendar.events.patch({
+    calendarId: googleCalendarId,
+    eventId: googleEventId,
+    sendUpdates: "all",
+    requestBody: {
+      summary: eventPayload.summary,
+      description: eventPayload.description,
+      location: eventPayload.location,
+      start: {
+        dateTime: eventPayload.start,
+      },
+      end: {
+        dateTime: eventPayload.end,
+      },
+      guestsCanInviteOthers: false,
+      guestsCanModify: false,
+      guestsCanSeeOtherGuests: false,
+    },
+  });
+
+  if (200 <= patchRes.status && patchRes.status <= 299) {
+    return { success: true, value: buildCalendarEvent(patchRes.data) };
+  }
+  console.log("updateEvent error", patchRes);
   return { success: false, message: `Patch failed with ${patchRes.status}` };
 }

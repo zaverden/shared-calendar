@@ -137,7 +137,8 @@ export type PublicEvent = AssignFields<
 async function addMissingEvents(
   googleEvents: CalendarEvent[],
   eventMaps: Map<string, ShacalEventMap>,
-  shacal: Shacal
+  shacal: Shacal,
+  ownerId: string
 ): Promise<ShacalEvent[]> {
   const missingEventsData = googleEvents
     .filter(({ id }) => !eventMaps.has(id))
@@ -145,7 +146,7 @@ async function addMissingEvents(
 
   const savedEvents = await createShacalEventBatch(
     missingEventsData,
-    shacal.userId,
+    ownerId,
     shacal
   );
 
@@ -168,14 +169,15 @@ async function addMissingEvents(
 export async function ensureEvents(
   googleEvents: CalendarEvent[],
   shacal: Shacal,
-  currentUserId: string | null
+  currentUserId: string | null,
+  missingEventsOwnerId: string
 ): Promise<PublicEvent[]> {
   if (googleEvents.length === 0) {
     return [];
   }
 
   const eventMaps = await getEventMaps(googleEvents.map(({ id }) => id));
-  const savedEvents = await addMissingEvents(googleEvents, eventMaps, shacal);
+  const savedEvents = await addMissingEvents(googleEvents, eventMaps, shacal, missingEventsOwnerId);
   savedEvents.forEach(({ googleEventId, publicId }) =>
     eventMaps.set(googleEventId, {
       publicId,
