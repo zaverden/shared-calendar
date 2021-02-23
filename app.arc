@@ -5,15 +5,15 @@ begin-app
 get /auth/google
 get /auth/google/callback
 get /auth/email/callback
-get /api/event/:publicId
-put /api/event/:publicId
-post /api/event/:publicId/join
-get /api/calendars/list
-get /api/calendars/shared/:publicId
-post /api/calendars/shared/:publicId/event
-put /api/calendars/shared/:publicId/add-permissions
-post /api/calendars/share/:gid
-delete /api/calendars/share/:gid
+get /api/e/:publicId
+put /api/e/:publicId
+post /api/e/:publicId/join
+get /api/c/list
+get /api/c/s/:publicId
+post /api/c/s/:publicId/e
+put /api/c/s/:publicId/p
+post /api/c/s/:gid
+delete /api/c/s/:gid
 
 @tables
 data
