@@ -18,6 +18,7 @@ export type CalendarEvent = {
   description: string;
   start: string;
   end: string;
+  location: string;
   attendees: CalendarEventAttendee[];
 };
 
@@ -58,6 +59,7 @@ function buildCalendarEvent(rawEvent: calendar_v3.Schema$Event): CalendarEvent {
     description: rawEvent.description ?? "",
     start: rawEvent.start?.dateTime!,
     end: rawEvent.end?.dateTime!,
+    location: rawEvent.location ?? "",
     attendees:
       rawEvent.attendees
         ?.filter(

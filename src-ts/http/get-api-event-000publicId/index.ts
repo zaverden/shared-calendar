@@ -59,6 +59,7 @@ export const handler = withBaseUrl(
         description: rawEvent.description,
         start: rawEvent.start,
         end: rawEvent.end,
+        location: rawEvent.location,
         attendees: owned ? rawEvent.attendees : undefined,
       };
 

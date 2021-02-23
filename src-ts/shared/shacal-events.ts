@@ -194,6 +194,7 @@ export async function ensureEvents(
       description: event.description,
       start: event.start,
       end: event.end,
+      location: event.location,
       owned: owned,
       attendees: owned ? event.attendees : undefined,
     };
