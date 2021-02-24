@@ -4,7 +4,7 @@ node_modules
 local.env
 *.js
 *.js.map
-public/index.html
 !*.eslintrc.js
 !build.js
 !build-client.js
+!public/entry.*.js
