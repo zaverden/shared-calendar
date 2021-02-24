@@ -15,7 +15,7 @@ const [, , arg] = process.argv;
     target: "node10.9.0",
     format: "cjs",
     bundle: true,
-    sourcemap: 'inline',
+    sourcemap: false,
     minify: true,
     watch: arg === "--watch",
   });
