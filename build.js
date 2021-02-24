@@ -1,8 +1,5 @@
+// @ts-check
 const glob = require("tiny-glob");
-const {
-  promises: { unlink },
-} = require("fs");
-
 const [, , arg] = process.argv;
 
 (async () => {

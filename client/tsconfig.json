@@ -1,0 +1,9 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "sourceMap": true,
+    "noUncheckedIndexedAccess": true,
+    "jsx": "react",
+    "lib": ["DOM", "ESNext"]
+  }
+}

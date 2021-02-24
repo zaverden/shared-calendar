@@ -1,0 +1,14 @@
+{
+  "name": "client",
+  "scripts": {
+    "watch": "node build-client.js --watch --dev",
+    "build": "node build-client.js"
+  },
+  "devDependencies": {
+    "@types/react": "17.0.2",
+    "@types/react-dom": "17.0.1",
+    "md5-file": "5.0.0",
+    "react": "17.0.1",
+    "react-dom": "17.0.1"
+  }
+}
