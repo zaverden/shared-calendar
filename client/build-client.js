@@ -18,6 +18,10 @@ async function processOutFile() {
   return `entry.${hash}.js`;
 }
 
+function onRebuild() {
+  console.log(new Date(), "Rebuild completed.");
+}
+
 (async () => {
   await require("esbuild").build({
     entryPoints: ["src/entry.tsx"],
@@ -32,7 +36,7 @@ async function processOutFile() {
     bundle: true,
     sourcemap: "inline",
     minify: true,
-    watch,
+    watch: watch ? { onRebuild } : false,
     define: {
       "process.env.NODE_ENV": dev ? '"development"' : '"production"',
     },

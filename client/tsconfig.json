@@ -4,6 +4,11 @@
     "sourceMap": true,
     "noUncheckedIndexedAccess": true,
     "jsx": "react",
-    "lib": ["DOM", "ESNext"]
+    "lib": ["DOM", "ESNext"],
+    "baseUrl": "./src",
+    "paths": {
+      "@shacal/ui/hooks": ["hooks/_.ts"],
+      "@shacal/ui/components": ["components/_.ts"]
+    }
   }
 }
