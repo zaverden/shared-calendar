@@ -8,7 +8,8 @@
     "baseUrl": "./src",
     "paths": {
       "@shacal/ui/hooks": ["hooks/_.ts"],
-      "@shacal/ui/components": ["components/_.ts"]
+      "@shacal/ui/components": ["components/_.ts"],
+      "@shacal/ui/data-access": ["data-access/_.ts"]
     }
   }
 }

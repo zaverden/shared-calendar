@@ -7,6 +7,8 @@ import {
   useRouteMatch,
   useParams,
 } from "react-router-dom";
+import { ReactQueryDevtools } from "react-query/devtools";
+import { QueryClientProvider, QueryClient } from "react-query";
 import { AppHeader } from "@shacal/ui/components";
 import { CalendarsListPage } from "./pages/calendars/calendars-list-page";
 
@@ -47,11 +49,13 @@ function Router() {
   );
 }
 
+const queryClient = new QueryClient();
 export function App() {
   return (
-    <Fragment>
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
       <AppHeader />
       <Router />
-    </Fragment>
+    </QueryClientProvider>
   );
 }

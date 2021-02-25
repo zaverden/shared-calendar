@@ -1,6 +1,6 @@
 // @ts-check
 const {
-  promises: { writeFile, readFile, rename },
+  promises: { writeFile, readFile, copyFile },
 } = require("fs");
 const md5 = require("md5-file");
 
@@ -14,7 +14,7 @@ async function processOutFile() {
     return "entry.js";
   }
   const hash = await md5("../public/entry.js");
-  await rename("../public/entry.js", `../public/entry.${hash}.js`);
+  await copyFile("../public/entry.js", `../public/entry.${hash}.js`);
   return `entry.${hash}.js`;
 }
 
@@ -35,7 +35,7 @@ function onRebuild() {
     },
     bundle: true,
     sourcemap: "inline",
-    minify: true,
+    minify: !dev,
     watch: watch ? { onRebuild } : false,
     define: {
       "process.env.NODE_ENV": dev ? '"development"' : '"production"',
