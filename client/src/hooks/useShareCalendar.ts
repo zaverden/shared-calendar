@@ -1,4 +1,4 @@
-import { shareCalendar } from "data-access/shareCalendar";
+import { shareCalendar } from "@shacal/ui/data-access";
 import { useMutation, UseMutationResult } from "react-query";
 import { useInvalidateCalendarsList } from "./useCalendarsList";
 

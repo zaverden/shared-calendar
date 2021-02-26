@@ -1,6 +1,17 @@
 import { Result } from "./result";
 
-export function parseJsonBody(body: string | undefined): Result<unknown> {
+function atob(str: string) {
+  return Buffer.from(str, "base64").toString("binary");
+}
+
+type ParseJsonBodyParams = {
+  body?: string;
+  isBase64Encoded?: boolean;
+};
+export function parseJsonBody({
+  body,
+  isBase64Encoded = false,
+}: ParseJsonBodyParams): Result<unknown> {
   if (body === undefined) {
     return {
       success: false,
@@ -8,7 +19,7 @@ export function parseJsonBody(body: string | undefined): Result<unknown> {
     };
   }
   try {
-    const json = JSON.parse(body);
+    const json = JSON.parse(isBase64Encoded ? atob(body) : body);
     return { success: true, value: json };
   } catch (err) {
     return {

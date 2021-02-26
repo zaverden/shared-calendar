@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import {
   BrowserRouter,
   Switch,
@@ -9,8 +9,9 @@ import {
 } from "react-router-dom";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { QueryClientProvider, QueryClient } from "react-query";
-import { AppHeader } from "@shacal/ui/components";
+import { AppHeader, NotFoundPage } from "@shacal/ui/components";
 import { CalendarsListPage } from "./pages/calendars/calendars-list-page";
+import { CalendarPage } from "pages/calendar/calendar-page";
 
 function Fake({ title }: { title: string }) {
   const match = useRouteMatch();
@@ -36,13 +37,16 @@ function Router() {
           <CalendarsListPage />
         </Route>
         <Route exact path="/calendar/:publicId">
-          <Fake title="calendar" />
+          <CalendarPage />
+        </Route>
+        <Route exact path="/calendar/:publicId/new-event">
+          <Fake title="new event" />
         </Route>
         <Route exact path="/event/:publicId">
           <Fake title="event" />
         </Route>
         <Route path="*">
-          <h1>404 NOT FOUND</h1>
+          <NotFoundPage />
         </Route>
       </Switch>
     </BrowserRouter>

@@ -6,10 +6,7 @@ import {
 } from "@architect/shared/begin";
 import { getShacal, replaceShacal } from "@architect/shared/shacal";
 import { User } from "@architect/shared/user/storage";
-import {
-  getJWTCookieName,
-  getJWTSecret,
-} from "@architect/shared/utils";
+import { getJWTCookieName, getJWTSecret } from "@architect/shared/utils";
 import { parseJsonBody } from "@architect/shared/body-parser";
 
 const ChangePermissionsListPayload = R.Record({
@@ -23,7 +20,8 @@ export const handler = withUser(
     req: HttpFunctionRequest,
     user: User
   ): Promise<HttpFunctionResponse> => {
-    const jsonResult = parseJsonBody(req.body);
+    console.log(req);
+    const jsonResult = parseJsonBody(req);
     if (!jsonResult.success) {
       return { statusCode: 400, body: JSON.stringify(jsonResult) };
     }

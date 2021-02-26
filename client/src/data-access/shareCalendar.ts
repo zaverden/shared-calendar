@@ -1,4 +1,4 @@
-import { pause, tryGetJsonMessage } from "utils";
+import { tryGetJsonMessage } from "utils";
 
 export async function shareCalendar(googleCalendarId: string): Promise<string> {
   const res = await fetch(`/api/c/s/${encodeURIComponent(googleCalendarId)}`, {

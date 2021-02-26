@@ -9,10 +9,9 @@ import { authorizeGoogleApi } from "@architect/shared/google/auth";
 import { getAuthClient } from "@architect/shared/google/auth-client";
 import {
   EventPayload,
-  getEvent,
   updateEvent,
 } from "@architect/shared/google/calendar";
-import { ensureEvents, getShacalEvent } from "@architect/shared/shacal-events";
+import { getShacalEvent } from "@architect/shared/shacal-events";
 import { User } from "@architect/shared/user/storage";
 import { getJWTCookieName, getJWTSecret } from "@architect/shared/utils";
 
@@ -25,7 +24,7 @@ export const handler = withBaseUrl(
       user: User,
       baseUrl: string
     ): Promise<HttpFunctionResponse> => {
-      const jsonResult = parseJsonBody(req.body);
+      const jsonResult = parseJsonBody(req);
       if (!jsonResult.success) {
         return { statusCode: 400, body: JSON.stringify(jsonResult) };
       }

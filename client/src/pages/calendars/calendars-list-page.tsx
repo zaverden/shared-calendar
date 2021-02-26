@@ -38,7 +38,6 @@ function CalendarStatus({
 export function CalendarsListPage() {
   const { isLoading, error, data: calendars } = useCalendarsList();
   const share = useShareCalendar();
-  console.log(share);
   return (
     <Page title="Google Calendars" loading={isLoading} showAuth={error?.message === "401"}>
       {() => (
