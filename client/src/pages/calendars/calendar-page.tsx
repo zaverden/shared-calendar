@@ -3,6 +3,7 @@ import { ShacalEvent } from "@shacal/ui/data-access";
 import { useShacal } from "@shacal/ui/hooks";
 import React, { Fragment } from "react";
 import { Link, useParams } from "react-router-dom";
+import { formatDate } from "utils";
 import { Permissions } from "./permissions";
 
 function AddEventLink({ publicId }: { publicId: string }) {
@@ -13,7 +14,13 @@ type EventCardProps = {
   event: ShacalEvent;
 };
 function EventCard({ event }: EventCardProps) {
-  return <div>{event.summary}</div>;
+  const d = new Date(event.start);
+  return (
+    <div>
+      <Link to={`/event/${event.publicId}`}>{event.summary}</Link>
+      <div>{formatDate(d)}</div>
+    </div>
+  );
 }
 
 export function CalendarPage() {

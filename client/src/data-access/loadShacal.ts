@@ -6,7 +6,7 @@ export type ShacalEvent = {
   start: string;
   end: string;
   location: string;
-  attendees: Array<{
+  attendees?: Array<{
     email: string;
     status: "declined" | "tentative" | "accepted";
   }>;

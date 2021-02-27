@@ -11,7 +11,7 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { AppHeader, NotFoundPage } from "@shacal/ui/components";
 import { CalendarsListPage } from "./pages/calendars/calendars-list-page";
-import { CalendarPage } from "pages/calendar/calendar-page";
+import { CalendarPage } from "pages/calendars/calendar-page";
 
 function Fake({ title }: { title: string }) {
   const match = useRouteMatch();

@@ -26,3 +26,16 @@ export function tryGetJsonMessage(s: string) {
 export function pause(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
+
+const dateFormatter = new Intl.DateTimeFormat(["ru"], {
+  weekday: "long",
+  day: "2-digit",
+  month: "long",
+  year: "numeric",
+  hour: "2-digit",
+  minute: "2-digit",
+});
+
+export function formatDate(date: Date) {
+  return dateFormatter.format(date);
+}
