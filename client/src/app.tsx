@@ -12,6 +12,7 @@ import { QueryClientProvider, QueryClient } from "react-query";
 import { AppHeader, NotFoundPage } from "@shacal/ui/components";
 import { CalendarsListPage } from "./pages/calendars/calendars-list-page";
 import { CalendarPage } from "pages/calendars/calendar-page";
+import { NewEventPage } from "pages/events/new-event-page";
 
 function Fake({ title }: { title: string }) {
   const match = useRouteMatch();
@@ -40,7 +41,7 @@ function Router() {
           <CalendarPage />
         </Route>
         <Route exact path="/calendar/:publicId/new-event">
-          <Fake title="new event" />
+          <NewEventPage />
         </Route>
         <Route exact path="/event/:publicId">
           <Fake title="event" />

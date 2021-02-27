@@ -9,13 +9,13 @@ const argsSet = new Set(args);
 const watch = argsSet.has("--watch");
 const dev = argsSet.has("--dev");
 
-async function processOutFile() {
+async function processOutFile(filename) {
   if (watch) {
-    return "entry.js";
+    return filename;
   }
-  const hash = await md5("../public/entry.js");
-  await copyFile("../public/entry.js", `../public/entry.${hash}.js`);
-  return `entry.${hash}.js`;
+  const hash = await md5(`../public/${filename}`);
+  await copyFile(`../public/${filename}`, `../public/${hash}.${filename}`);
+  return `${hash}.${filename}`;
 }
 
 function onRebuild() {
@@ -32,6 +32,7 @@ function onRebuild() {
     loader: {
       ".ts": "ts",
       ".tsx": "tsx",
+      ".css": "css",
     },
     bundle: true,
     sourcemap: "inline",
@@ -41,8 +42,11 @@ function onRebuild() {
       "process.env.NODE_ENV": dev ? '"development"' : '"production"',
     },
   });
-  const outFileName = await processOutFile();
+  const outJsFileName = await processOutFile("entry.js");
+  const outCssFileName = await processOutFile("entry.css");
   let html = await readFile("src/index.html", { encoding: "utf8" });
-  html = html.replace("%JS-FILE-NAME%", outFileName);
+  html = html
+    .replace("%JS-FILE-NAME%", outJsFileName)
+    .replace("%CSS-FILE-NAME%", outCssFileName);
   await writeFile("../public/index.html", html, { encoding: "utf8" });
 })();
