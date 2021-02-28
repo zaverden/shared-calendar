@@ -1,5 +1,5 @@
 import { Page } from "@shacal/ui/components";
-import { EventPayload, ShacalEventAttendee } from "@shacal/ui/data-access";
+import { EventPayload } from "@shacal/ui/data-access";
 import { useEvent, useUpdateEvent } from "@shacal/ui/hooks";
 import React, { Fragment } from "react";
 import { useParams } from "react-router-dom";
@@ -7,6 +7,7 @@ import { formatDate, getDuration } from "utils";
 import { Attendees } from "./attendees";
 import { EventForm } from "./event-form";
 import { JoinEvent } from "./join-event";
+import { DescriptionView } from "./descriptionView";
 
 type EventViewProps = { event: EventPayload };
 function EventView({ event }: EventViewProps) {
@@ -30,7 +31,7 @@ function EventView({ event }: EventViewProps) {
       </label>
       <label style={{ display: "block" }}>
         Description
-        <span>{event.description}</span>
+        <DescriptionView description={event.description} />
       </label>
     </Fragment>
   );

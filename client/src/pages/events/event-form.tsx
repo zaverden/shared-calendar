@@ -2,6 +2,7 @@ import { EventPayload } from "@shacal/ui/data-access";
 import React, { FormEvent, useState } from "react";
 import DatePicker from "react-datepicker";
 import { getDuration, MS_IN_MINUTE } from "utils";
+import { DescriptionView } from "./descriptionView";
 
 const DEFAULT_DURATION_MIN = 60;
 
@@ -23,6 +24,7 @@ export function EventForm({ event, isSaving, onSave }: EventFormProps) {
   const [startDate, setStartDate] = useState<Date | null>(
     event.start === "" ? null : new Date(event.start)
   );
+  const [description, setDescription] = useState<string>(event.description);
   const [duration] = useState<number>(
     () => getDuration(event) ?? DEFAULT_DURATION_MIN
   );
@@ -101,10 +103,12 @@ export function EventForm({ event, isSaving, onSave }: EventFormProps) {
         Description
         <textarea
           name="description"
-          defaultValue={event.description}
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
           required
           disabled={isSaving}
         />
+        <DescriptionView description={description} />
       </label>
       <button type="submit" disabled={isSaving}>
         Save
