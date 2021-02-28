@@ -39,3 +39,9 @@ const dateFormatter = new Intl.DateTimeFormat(["ru"], {
 export function formatDate(date: Date) {
   return dateFormatter.format(date);
 }
+
+export const MS_IN_MINUTE = 60 * 1000;
+export function getDuration({ start, end }: { start: string; end: string }) {
+  const diff = new Date(end).getTime() - new Date(start).getTime();
+  return diff / MS_IN_MINUTE;
+}

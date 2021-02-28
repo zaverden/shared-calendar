@@ -35,7 +35,7 @@ export function Page({
   return (
     <Fragment>
       <Helmet>
-        <title>ShaCal - {title}</title>
+        <title>ShaCal: {title}</title>
       </Helmet>
       {renderMain()}
     </Fragment>

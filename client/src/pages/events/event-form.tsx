@@ -1,8 +1,8 @@
 import { EventPayload } from "@shacal/ui/data-access";
 import React, { FormEvent, useState } from "react";
 import DatePicker from "react-datepicker";
+import { getDuration, MS_IN_MINUTE } from "utils";
 
-const MS_IN_MINUTE = 60 * 1000;
 const DEFAULT_DURATION_MIN = 60;
 
 type EventValues = {
@@ -23,14 +23,9 @@ export function EventForm({ event, isSaving, onSave }: EventFormProps) {
   const [startDate, setStartDate] = useState<Date | null>(
     event.start === "" ? null : new Date(event.start)
   );
-  const [duration] = useState<number>(() => {
-    if (event.start === "" || event.end === "") {
-      return DEFAULT_DURATION_MIN;
-    }
-    const diff =
-      new Date(event.start).getTime() - new Date(event.end).getTime();
-    return diff / MS_IN_MINUTE ?? DEFAULT_DURATION_MIN;
-  });
+  const [duration] = useState<number>(
+    () => getDuration(event) ?? DEFAULT_DURATION_MIN
+  );
   const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const target = e.target as HTMLFormElement;

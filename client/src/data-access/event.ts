@@ -1,5 +1,10 @@
 import { tryGetJsonMessage } from "utils";
 
+export type ShacalEventAttendee = {
+  email: string;
+  status: "declined" | "tentative" | "accepted";
+};
+
 export type ShacalEvent = {
   publicId: string;
   owned: boolean;
@@ -8,10 +13,7 @@ export type ShacalEvent = {
   start: string;
   end: string;
   location: string;
-  attendees?: Array<{
-    email: string;
-    status: "declined" | "tentative" | "accepted";
-  }>;
+  attendees?: ShacalEventAttendee[];
 };
 
 export type EventPayload = {
@@ -59,15 +61,15 @@ export async function loadEvent(publicId: string): Promise<ShacalEvent> {
 
 export type UpdateEventParams = {
   publicId: string;
-  payload: EventPayload;
+  event: EventPayload;
 };
 export async function updateEvent({
   publicId,
-  payload,
+  event,
 }: UpdateEventParams): Promise<ShacalEvent> {
   const res = await fetch(`/api/e/${publicId}`, {
     method: "PUT",
-    body: JSON.stringify(payload),
+    body: JSON.stringify(event),
   });
   if (res.status === 200) {
     const json = await res.json();

@@ -13,6 +13,7 @@ import { AppHeader, NotFoundPage } from "@shacal/ui/components";
 import { CalendarsListPage } from "./pages/calendars/calendars-list-page";
 import { CalendarPage } from "pages/calendars/calendar-page";
 import { NewEventPage } from "pages/events/new-event-page";
+import { EventPage } from "pages/events/event-page";
 
 function Fake({ title }: { title: string }) {
   const match = useRouteMatch();
@@ -44,7 +45,7 @@ function Router() {
           <NewEventPage />
         </Route>
         <Route exact path="/event/:publicId">
-          <Fake title="event" />
+          <EventPage />
         </Route>
         <Route path="*">
           <NotFoundPage />
