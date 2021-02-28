@@ -8,6 +8,9 @@ export async function shareCalendar(googleCalendarId: string): Promise<string> {
     const data = await res.json();
     return data.publicId;
   }
-  const text = await res.text();
-  throw new Error(res.status === 401 ? "401" : tryGetJsonMessage(text));
+  throw new Error(
+    res.status === 400
+      ? tryGetJsonMessage(await res.text())
+      : res.status.toString()
+  );
 }

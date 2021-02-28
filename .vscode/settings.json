@@ -10,7 +10,7 @@
     "**/.hg": true,
     "**/CVS": true,
     "**/.DS_Store": true,
-    "public/entry.js": true,
-    "public/entry.*.js": true
+    "public/entry.*": true,
+    "public/*.entry.*": true
   }
 }

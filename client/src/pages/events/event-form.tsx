@@ -1,16 +1,9 @@
+import { EventPayload } from "@shacal/ui/data-access";
 import React, { FormEvent, useState } from "react";
 import DatePicker from "react-datepicker";
 
 const MS_IN_MINUTE = 60 * 1000;
 const DEFAULT_DURATION_MIN = 60;
-
-export type EditableEvent = {
-  summary: string;
-  description: string;
-  start: string;
-  end: string;
-  location: string;
-};
 
 type EventValues = {
   summary: string;
@@ -21,8 +14,8 @@ type EventValues = {
 };
 
 type EventFormProps = {
-  event: EditableEvent;
-  onSave: (e: EditableEvent) => void;
+  event: EventPayload;
+  onSave: (e: EventPayload) => void;
 };
 
 export function EventForm({ event, onSave }: EventFormProps) {

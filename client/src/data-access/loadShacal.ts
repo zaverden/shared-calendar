@@ -1,16 +1,5 @@
-export type ShacalEvent = {
-  publicId: string;
-  owned: boolean;
-  summary: string;
-  description: string;
-  start: string;
-  end: string;
-  location: string;
-  attendees?: Array<{
-    email: string;
-    status: "declined" | "tentative" | "accepted";
-  }>;
-};
+import { tryGetJsonMessage } from "utils";
+import { ShacalEvent } from "./event";
 
 export type Shacal = {
   owned: boolean;
@@ -23,5 +12,9 @@ export async function loadShacal(publicId: string): Promise<Shacal> {
   if (res.status === 200) {
     return await res.json();
   }
-  throw new Error(res.status.toString());
+  throw new Error(
+    res.status === 400
+      ? tryGetJsonMessage(await res.text())
+      : res.status.toString()
+  );
 }

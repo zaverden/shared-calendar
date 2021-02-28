@@ -1,3 +1,5 @@
+import { tryGetJsonMessage } from "utils";
+
 export type Calendar = {
   id: string;
   summary: string;
@@ -10,5 +12,9 @@ export async function loadCalendarsList(): Promise<Calendar[]> {
   if (res.status === 200) {
     return await res.json();
   }
-  throw new Error(res.status === 401 ? "401" : "unknown");
+  throw new Error(
+    res.status === 400
+      ? tryGetJsonMessage(await res.text())
+      : res.status.toString()
+  );
 }
