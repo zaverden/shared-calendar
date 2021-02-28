@@ -45,3 +45,24 @@ export function getDuration({ start, end }: { start: string; end: string }) {
   const diff = new Date(end).getTime() - new Date(start).getTime();
   return diff / MS_IN_MINUTE;
 }
+
+export function getCookieValue(
+  cookies: string[],
+  cookieName: string
+): string | null {
+  const prefix = `${cookieName}=`;
+  const cookie = cookies.find((c) => c.startsWith(prefix));
+  return cookie?.replace(prefix, "") ?? null;
+}
+
+export function getEmails(): string[] {
+  const cookies = document.cookie.split(";").map((c) => c.trim());
+  const emailsToken = getCookieValue(cookies, "emails") ?? "";
+  const [_, payloadBase64, __] = emailsToken.split(".");
+  try {
+    const payload = JSON.parse(atob(payloadBase64 ?? ""));
+    return payload.emails;
+  } catch (_) {
+    return [];
+  }
+}

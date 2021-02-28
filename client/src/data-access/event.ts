@@ -84,7 +84,7 @@ export async function updateEvent({
 
 export type JoinEventParams = {
   publicId: string;
-  email: EventPayload;
+  email: string;
 };
 export async function joinEvent({
   publicId,

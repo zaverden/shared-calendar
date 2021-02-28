@@ -4,7 +4,9 @@ import { useEvent, useUpdateEvent } from "@shacal/ui/hooks";
 import React, { Fragment } from "react";
 import { useParams } from "react-router-dom";
 import { formatDate, getDuration } from "utils";
+import { Attendees } from "./attendees";
 import { EventForm } from "./event-form";
+import { JoinEvent } from "./join-event";
 
 type EventViewProps = { event: EventPayload };
 function EventView({ event }: EventViewProps) {
@@ -34,29 +36,6 @@ function EventView({ event }: EventViewProps) {
   );
 }
 
-const statusMap = {
-  declined: "❌",
-  tentative: "❔",
-  accepted: "✔️",
-};
-type AttendeesProps = { attendees: ShacalEventAttendee[] | undefined };
-function Attendees({ attendees }: AttendeesProps) {
-  if (attendees === undefined) {
-    return null;
-  }
-  return (
-    <details>
-      <summary>Attendees</summary>
-      {attendees.map(({ email, status }, i) => (
-        <p>
-          {statusMap[status]}&nbsp;{email}
-        </p>
-      ))}
-      {attendees.length === 0 ? <p>No Attendees</p> : null}
-    </details>
-  );
-}
-
 export function EventPage() {
   const { publicId } = useParams<{ publicId: string }>();
   const event = useEvent(publicId);
@@ -74,6 +53,7 @@ export function EventPage() {
           ) : (
             <EventView event={event.data!} />
           )}
+          <JoinEvent publicId={publicId} />
           <Attendees attendees={event.data?.attendees} />
         </Fragment>
       )}
