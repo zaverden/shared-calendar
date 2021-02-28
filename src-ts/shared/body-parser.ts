@@ -1,7 +1,7 @@
 import { Result } from "./result";
 
 function atob(str: string) {
-  return Buffer.from(str, "base64").toString("binary");
+  return Buffer.from(str, "base64").toString("utf8");
 }
 
 type ParseJsonBodyParams = {

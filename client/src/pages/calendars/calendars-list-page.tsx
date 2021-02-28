@@ -42,7 +42,7 @@ export function CalendarsListPage() {
     <Page title="Google Calendars" loading={isLoading} showAuth={error?.message === "401"}>
       {() => (
         <Fragment>
-          {share.isSuccess ? <Redirect to={`/calendar/${share.data}`} /> : null}
+          {share.isSuccess ? <Redirect to={`/calendar/${share.data}`} push /> : null}
           <ul>
             {calendars?.map(({ id, summary, color, publicId }) => (
               <li key={id}>

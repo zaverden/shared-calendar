@@ -15,10 +15,11 @@ type EventValues = {
 
 type EventFormProps = {
   event: EventPayload;
+  isSaving: boolean;
   onSave: (e: EventPayload) => void;
 };
 
-export function EventForm({ event, onSave }: EventFormProps) {
+export function EventForm({ event, isSaving, onSave }: EventFormProps) {
   const [startDate, setStartDate] = useState<Date | null>(
     event.start === "" ? null : new Date(event.start)
   );
@@ -64,6 +65,7 @@ export function EventForm({ event, onSave }: EventFormProps) {
           name="summary"
           defaultValue={event.summary}
           required
+          disabled={isSaving}
         />
       </label>
       <label style={{ display: "block" }}>
@@ -76,6 +78,7 @@ export function EventForm({ event, onSave }: EventFormProps) {
           timeIntervals={15}
           selected={startDate}
           name="start"
+          disabled={isSaving}
         />
       </label>
       <label style={{ display: "block" }}>
@@ -85,13 +88,19 @@ export function EventForm({ event, onSave }: EventFormProps) {
           name="duration"
           defaultValue={duration}
           required
+          disabled={isSaving}
           step={15}
           min={15}
         />
       </label>
       <label style={{ display: "block" }}>
         Location
-        <input type="text" name="location" defaultValue={event.location} />
+        <input
+          type="text"
+          name="location"
+          defaultValue={event.location}
+          disabled={isSaving}
+        />
       </label>
       <label style={{ display: "block" }}>
         Description
@@ -99,9 +108,12 @@ export function EventForm({ event, onSave }: EventFormProps) {
           name="description"
           defaultValue={event.description}
           required
+          disabled={isSaving}
         />
       </label>
-      <button type="submit">Save</button>
+      <button type="submit" disabled={isSaving}>
+        Save
+      </button>
     </form>
   );
 }

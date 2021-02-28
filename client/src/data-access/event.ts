@@ -24,15 +24,15 @@ export type EventPayload = {
 
 export type CreateEventParams = {
   shacalPublicId: string;
-  payload: EventPayload;
+  event: EventPayload;
 };
 export async function createEvent({
   shacalPublicId,
-  payload,
+  event,
 }: CreateEventParams): Promise<ShacalEvent> {
   const res = await fetch(`/api/c/s/${shacalPublicId}/e`, {
     method: "POST",
-    body: JSON.stringify(payload),
+    body: JSON.stringify(event),
   });
   if (res.status === 200) {
     const json = await res.json();
