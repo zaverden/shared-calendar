@@ -1,8 +1,9 @@
+import "react-quill/dist/quill.snow.css";
 import { EventPayload } from "@shacal/ui/data-access";
 import React, { FormEvent, useState } from "react";
 import DatePicker from "react-datepicker";
+import ReactQuill from "react-quill";
 import { getDuration, MS_IN_MINUTE } from "utils";
-import { DescriptionView } from "./descriptionView";
 
 const DEFAULT_DURATION_MIN = 60;
 
@@ -20,24 +21,38 @@ type EventFormProps = {
   onSave: (e: EventPayload) => void;
 };
 
+const modules = {
+  toolbar: [
+    ["clean"],
+    ["bold", "italic", "underline"],
+    ["link"],
+    [{ list: "ordered" }, { list: "bullet" }],
+  ],
+  clipboard: {
+    // toggle to add extra line breaks when pasting HTML:
+    matchVisual: false,
+  },
+};
+const formats = [
+  "bold",
+  "italic",
+  "underline",
+  "link",
+  "list",
+  "bullet",
+  "indent",
+];
+
 export function EventForm({ event, isSaving, onSave }: EventFormProps) {
   const [startDate, setStartDate] = useState<Date | null>(
     event.start === "" ? null : new Date(event.start)
   );
   const [description, setDescription] = useState<string>(event.description);
-  const [duration] = useState<number>(
-    () => getDuration(event) ?? DEFAULT_DURATION_MIN
-  );
+  const [duration] = useState(() => getDuration(event) || DEFAULT_DURATION_MIN);
   const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const target = e.target as HTMLFormElement;
-    const entries = [
-      "summary",
-      "description",
-      "start",
-      "duration",
-      "location",
-    ].map((f) => [
+    const entries = ["summary", "start", "duration", "location"].map((f) => [
       f,
       (target.elements.namedItem(f) as { value: string }).value ?? "",
     ]);
@@ -47,7 +62,7 @@ export function EventForm({ event, isSaving, onSave }: EventFormProps) {
     const endDate = new Date(startDate.getTime() + duration * MS_IN_MINUTE);
     onSave({
       summary: values.summary,
-      description: values.description,
+      description: description,
       location: values.location,
       start: startDate.toISOString(),
       end: endDate.toISOString(),
@@ -62,6 +77,7 @@ export function EventForm({ event, isSaving, onSave }: EventFormProps) {
           name="summary"
           defaultValue={event.summary}
           required
+          autoComplete="off"
           disabled={isSaving}
         />
       </label>
@@ -70,6 +86,7 @@ export function EventForm({ event, isSaving, onSave }: EventFormProps) {
         <DatePicker
           onChange={(d) => setStartDate(d as Date)}
           required
+          autoComplete="off"
           dateFormat="Pp"
           showTimeSelect
           timeIntervals={15}
@@ -85,6 +102,7 @@ export function EventForm({ event, isSaving, onSave }: EventFormProps) {
           name="duration"
           defaultValue={duration}
           required
+          autoComplete="off"
           disabled={isSaving}
           step={15}
           min={15}
@@ -95,21 +113,22 @@ export function EventForm({ event, isSaving, onSave }: EventFormProps) {
         <input
           type="text"
           name="location"
+          autoComplete="off"
           defaultValue={event.location}
           disabled={isSaving}
         />
       </label>
-      <label style={{ display: "block" }}>
+      <div>
         Description
-        <textarea
-          name="description"
+        <ReactQuill
+          theme="snow"
+          placeholder="Describe an event"
+          modules={modules}
+          formats={formats}
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          required
-          disabled={isSaving}
+          onChange={setDescription}
         />
-        <DescriptionView description={description} />
-      </label>
+      </div>
       <button type="submit" disabled={isSaving}>
         Save
       </button>

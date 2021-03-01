@@ -2,7 +2,7 @@
 .DS_Store
 node_modules
 local.env
-*.css
+public/*.css
 *.js
 *.js.map
 !*.eslintrc.js

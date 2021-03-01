@@ -7,7 +7,7 @@ import { formatDate, getDuration } from "utils";
 import { Attendees } from "./attendees";
 import { EventForm } from "./event-form";
 import { JoinEvent } from "./join-event";
-import { DescriptionView } from "./descriptionView";
+import { DescriptionView } from "./description-view";
 
 type EventViewProps = { event: EventPayload };
 function EventView({ event }: EventViewProps) {
