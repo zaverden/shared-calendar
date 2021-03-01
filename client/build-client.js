@@ -35,6 +35,7 @@ function onRebuild() {
       ".css": "css",
     },
     bundle: true,
+    sourcemap: true,
     minify: !dev,
     watch: watch ? { onRebuild } : false,
     define: {

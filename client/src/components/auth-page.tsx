@@ -9,7 +9,7 @@ function getEncodedRootUrl(): string {
 }
 
 export function AuthPage() {
-  const authUrl = `/auth/google?r=${getEncodedRootUrl()}`;
+  const authUrl = `/auth/google/_?r=${getEncodedRootUrl()}`;
   return (
     <div>
       <p>

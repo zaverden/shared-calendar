@@ -2,8 +2,7 @@
 begin-app
 
 @http
-get /auth/:service
-get /auth/:service/callback
+get /auth/:service/:method
 get /api/e/:publicId
 put /api/e/:publicId
 post /api/e/:publicId/join

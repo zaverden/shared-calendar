@@ -42,7 +42,11 @@ export function EventPage() {
   const event = useEvent(publicId);
   const update = useUpdateEvent();
   return (
-    <Page loading={event.isLoading} title={event.data?.summary ?? "Event"}>
+    <Page
+      loading={event.isLoading}
+      show404={event.error?.message === "404"}
+      title={event.data?.summary ?? "Event"}
+    >
       {() => (
         <Fragment>
           {event.data?.owned ? (
