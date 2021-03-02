@@ -1,6 +1,13 @@
 // @ts-check
 const glob = require("tiny-glob");
-const [, , arg] = process.argv;
+
+const [, , ...args] = process.argv;
+const argsSet = new Set(args);
+const watch = argsSet.has("--watch");
+
+function onRebuild() {
+  console.log(new Date(), "Rebuild completed.");
+}
 
 (async () => {
   const tsPaths = await glob("src-ts/**/index.ts");
@@ -14,6 +21,6 @@ const [, , arg] = process.argv;
     bundle: true,
     sourcemap: false,
     minify: true,
-    watch: arg === "--watch",
+    watch: watch ? { onRebuild } : false,
   });
 })();

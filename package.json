@@ -12,6 +12,7 @@
   "devDependencies": {
     "@architect/sandbox": "3.3.6",
     "@begin/data": "latest",
+    "@sendgrid/mail": "7.4.2",
     "@tsconfig/node10": "1.0.7",
     "@types/jsonwebtoken": "8.5.0",
     "@types/node": "10.17.51",
