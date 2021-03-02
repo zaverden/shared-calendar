@@ -8,10 +8,6 @@ import {
   buildConfirmedEmailsToken,
   withConfirmedEmails,
 } from "@architect/shared/confirmed-emails";
-import { authorizeGoogleApi } from "@architect/shared/google/auth";
-import { getAuthClient } from "@architect/shared/google/auth-client";
-import { addAttendee, getEvent } from "@architect/shared/google/calendar";
-import { getShacalEvent } from "@architect/shared/shacal-events";
 import {
   getConfirmedEmailsCookieName,
   getJWTSecret,
@@ -19,6 +15,7 @@ import {
 } from "@architect/shared/utils";
 import { parseJsonBody } from "@architect/shared/body-parser";
 import { URL } from "url";
+import { sentAuthEmail } from "@architect/shared/email";
 
 const AuthEmailPayload = R.Record({
   email: R.String,
@@ -72,11 +69,11 @@ export const handler = withBaseUrl(
       url.searchParams.append("t", emailToken);
       url.searchParams.append("r", sanitizeReturnUrl(returnUrl));
 
-      console.log({ url: url.toString() });
+      const sendResult = await sentAuthEmail(email, url.toString());
 
       return {
-        statusCode: 200,
-        body: JSON.stringify({ success: true }),
+        statusCode: sendResult.success ? 200 : 400,
+        body: JSON.stringify(sendResult),
       };
     }
   )

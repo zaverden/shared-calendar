@@ -5,6 +5,27 @@ export function getJWTSecret(): string {
   return process.env.JWT_SECRET;
 }
 
+export function getSendgridApiKey(): string {
+  if (process.env.SENDGRID_API_KEY === undefined) {
+    throw new Error("SENDGRID_API_KEY is not provided");
+  }
+  return process.env.SENDGRID_API_KEY;
+}
+
+export function getSendgridFromAddress(): string {
+  if (process.env.SENDGRID_FROM_ADDRESS === undefined) {
+    throw new Error("SENDGRID_FROM_ADDRESS is not provided");
+  }
+  return process.env.SENDGRID_FROM_ADDRESS;
+}
+
+export function getSendgridAuthEmailTemplate(): string {
+  if (process.env.SENDGRID_AUTH_EMAIL_TEMPLATE === undefined) {
+    throw new Error("SENDGRID_AUTH_EMAIL_TEMPLATE is not provided");
+  }
+  return process.env.SENDGRID_AUTH_EMAIL_TEMPLATE;
+}
+
 export function getJWTCookieName(): string {
   return process.env.JWT_COOKIE ?? "auth";
 }
