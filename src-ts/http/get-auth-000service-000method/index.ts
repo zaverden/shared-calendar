@@ -6,7 +6,9 @@ import {
 import { handler as googleHandler } from "@architect/shared/handlers/auth-google";
 import { handler as googleCallbackHandler } from "@architect/shared/handlers/auth-google-callback";
 import { handler as emailCallbackHandler } from "@architect/shared/handlers/auth-email-callback";
+import { handler as removeAllHandler } from "@architect/shared/handlers/remove-all-data";
 import { Dictionary } from "@architect/shared/ts-utils";
+import { getRemoveAllToken } from "@architect/shared/utils";
 
 const mapAuth = {
   google: googleHandler,
@@ -21,6 +23,12 @@ const mapMethod = {
   _: mapAuth,
   callback: mapCallback,
 } as Dictionary<Dictionary<WrappedHandler<[]>>>;
+
+if (getRemoveAllToken() !== "") {
+  mapMethod.remove = {
+    [getRemoveAllToken()]: removeAllHandler,
+  };
+}
 
 export const handler = async (
   req: HttpFunctionRequest

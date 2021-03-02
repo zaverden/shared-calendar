@@ -26,6 +26,10 @@ export function getSendgridAuthEmailTemplate(): string {
   return process.env.SENDGRID_AUTH_EMAIL_TEMPLATE;
 }
 
+export function getRemoveAllToken(): string {
+  return process.env.REMOVE_ALL_TOKEN ?? "";
+}
+
 export function getJWTCookieName(): string {
   return process.env.JWT_COOKIE ?? "auth";
 }

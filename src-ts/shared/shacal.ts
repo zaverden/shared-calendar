@@ -2,7 +2,7 @@ import * as D from "@begin/data";
 import * as R from "runtypes";
 import { getId } from "./utils";
 
-const SHACAL_TABLE = "USERS";
+const SHACAL_TABLE = "SHACAL";
 const Shacal = R.Record({
   publicId: R.String,
   userId: R.String,
