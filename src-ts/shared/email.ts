@@ -60,7 +60,7 @@ export async function sentAuthEmail(
 }
 
 const LAST_SEND_TABLE = "LAST_SEND";
-const LastSend = R.Record({ d: R.Number });
+const LastSend = R.Record({ data: R.Number });
 type LastSend = R.Static<typeof LastSend>;
 
 function getNextSend(d: Date): Date {
@@ -73,7 +73,7 @@ async function getLastSend(email: string): Promise<Date | null> {
     key: email,
   });
   const lastSendResult = LastSend.validate(r);
-  return lastSendResult.success ? new Date(lastSendResult.value.d) : null;
+  return lastSendResult.success ? new Date(lastSendResult.value.data) : null;
 }
 
 async function setLastSend(email: string): Promise<void> {
@@ -81,6 +81,6 @@ async function setLastSend(email: string): Promise<void> {
     table: LAST_SEND_TABLE,
     key: email,
     ttl: getTTL(getNextSend(new Date())),
-    d: Date.now(),
+    data: Date.now(),
   });
 }

@@ -19,15 +19,15 @@ export async function getGoogleAccount(
     table: GOOGLE_ACCOUNT_TABLE,
     key: accountId,
   });
-  const accountResult = GoogleAccount.validate(r?.account);
+  const accountResult = GoogleAccount.validate(r?.data);
   return accountResult.success ? accountResult.value : null;
 }
 
 export async function saveGoogleAccount(account: GoogleAccount): Promise<void> {
   console.log("Saving account", account);
-  await D.set({
+  await D.set<{ data: GoogleAccount }>({
     table: GOOGLE_ACCOUNT_TABLE,
     key: account.accountId,
-    account,
+    data: account,
   });
 }
