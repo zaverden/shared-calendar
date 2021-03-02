@@ -52,6 +52,7 @@ export const handler = withBaseUrl(
         shacalEvent.googleAccountId
       );
       if (authResult.success === false) {
+        console.log(500, authResult);
         return {
           statusCode: 500,
           body: JSON.stringify({
