@@ -17,8 +17,8 @@ export const Button = styled("button", {
   shouldForwardProp: (propName) =>
     typeof propName !== "string" || !filteredProps.has(propName),
 })<ButtonProps>`
-  appearance: none;
   display: inline-block;
+  box-sizing: border-box;
   text-decoration: none;
   text-align: center;
   cursor: pointer;

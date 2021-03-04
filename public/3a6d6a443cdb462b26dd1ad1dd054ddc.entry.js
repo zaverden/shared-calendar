@@ -66,8 +66,8 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   --bg-p: #00AA98;
   --bg-s: #515151;
 `;function HE(e){return e?"var(--bg-s)":"var(--bg-p)"}var CF=new Set(["medium","secondary"]),Ca=_r("button",{shouldForwardProp:e=>typeof e!="string"||!CF.has(e)})`
-  appearance: none;
   display: inline-block;
+  box-sizing: border-box;
   text-decoration: none;
   text-align: center;
   cursor: pointer;
