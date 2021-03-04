@@ -1,12 +1,17 @@
+import styled from "@emotion/styled";
 import { Page } from "@shacal/ui/components";
 import { useCalendarsList } from "@shacal/ui/hooks";
-import { Button, LinkButton } from "@shacal/ui/kit";
+import { Button, H1, LinkButton } from "@shacal/ui/kit";
 import { useShareCalendar } from "hooks/useShareCalendar";
 import React, { Fragment } from "react";
 import { Redirect } from "react-router-dom";
 
 function Dot({ color }: { color: string }) {
-  return <span style={{ color }}>&#11044;</span>;
+  return (
+    <span aria-label="" style={{ color }}>
+      &#11044;
+    </span>
+  );
 }
 
 type CalendarStatusProps = {
@@ -24,7 +29,11 @@ function CalendarStatus({
   onShare,
 }: CalendarStatusProps) {
   if (publicId != null) {
-    return <LinkButton medium to={`/calendar/${publicId}`}>Go</LinkButton>;
+    return (
+      <LinkButton medium to={`/calendar/${publicId}`}>
+        Go
+      </LinkButton>
+    );
   }
   if (isSharing && id === sharingId) {
     return <span>SHARING...</span>;
@@ -35,6 +44,29 @@ function CalendarStatus({
     </Button>
   );
 }
+
+const List = styled.ul`
+  list-style-type: none;
+  padding-inline: 0;
+`;
+
+const Line = styled.li`
+  display: flex;
+  align-items: baseline;
+  padding: 1em 0;
+  gap: 1em;
+
+  & > :nth-child(1) {
+    flex-grow: 0;
+  }
+  & > :nth-child(2) {
+    flex-grow: 1;
+  }
+  & > :nth-child(3) {
+    flex-grow: 0;
+    min-width: 67px;
+  }
+`;
 
 export function CalendarsListPage() {
   const { isLoading, error, data: calendars } = useCalendarsList();
@@ -50,11 +82,12 @@ export function CalendarsListPage() {
           {share.isSuccess ? (
             <Redirect to={`/calendar/${share.data}`} push />
           ) : null}
-          <ul>
+          <H1>Available calendars</H1>
+          <List>
             {calendars?.map(({ id, summary, color, publicId }) => (
-              <li key={id}>
+              <Line key={id}>
                 <Dot color={color} />
-                {summary}
+                <span>{summary}</span>
                 <CalendarStatus
                   id={id}
                   publicId={publicId}
@@ -62,9 +95,9 @@ export function CalendarsListPage() {
                   sharingId={share.context}
                   onShare={share.mutate}
                 />
-              </li>
+              </Line>
             ))}
-          </ul>
+          </List>
         </Fragment>
       )}
     </Page>

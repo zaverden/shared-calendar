@@ -62,7 +62,7 @@ const AppPanel = styled.div`
   max-width: 350px;
   min-height: 100vh;
   margin: 0 auto;
-  padding-top: 10px;
+  padding: 10px 20px 0 20px;
   box-shadow: 0px 0px 300px -60px var(--bg-p);
 `;
 

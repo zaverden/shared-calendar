@@ -13,7 +13,6 @@ const Slogan = styled.p`
   margin: 0 auto;
   width: fit-content;
   font-size: var(--fs-s);
-  font-weight: var(--fw-m);
   line-height: 2em;
 
   & > span {
@@ -25,7 +24,7 @@ const Slogan = styled.p`
 export function AppHeader() {
   return (
     <Fragment>
-      <Logo src="/shacal_logo.svg" width="358" height="104" />
+      <Logo src="/shacal_logo.svg" width="358" height="104" alt="Shacal logo" />
       <Slogan>
         Your <span>SHA</span>red <span>CAL</span>endar
       </Slogan>

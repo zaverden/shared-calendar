@@ -5,7 +5,7 @@ export const FONT_SIZE_VARS = `
 `;
 
 export const FONT_WEIGHT_VARS = `
---fw-default: 400;
---fw-m: 500;
+--fw-th: 400;
+--fw-default: 500;
 --fw-b: 700;
 `;

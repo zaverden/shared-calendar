@@ -17,12 +17,15 @@ export const Button = styled("button", {
   shouldForwardProp: (propName) =>
     typeof propName !== "string" || !filteredProps.has(propName),
 })<ButtonProps>`
+  appearance: none;
+  display: inline-block;
   text-decoration: none;
+  text-align: center;
   cursor: pointer;
   color: #fff;
   border: 0;
   border-radius: 4px;
-  font-weight: 700;
+  font-weight: var(--fw-b);
   background-color: ${({ secondary }) => bg(secondary)};
   padding: ${({ medium: medium }) => (medium ? "8px" : "10px")};
   opacity: ${({ disabled }) => (!disabled ? 1 : 0.5)};
