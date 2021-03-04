@@ -10,6 +10,7 @@ import { NewEventPage } from "pages/events/new-event-page";
 import { EventPage } from "pages/events/event-page";
 import { Global, css } from "@emotion/react";
 import styled from "@emotion/styled";
+import { CalendarsListPageFake } from "pages/calendars/calendars-list-page-fake";
 
 function Router() {
   return (
@@ -17,6 +18,9 @@ function Router() {
       <Switch>
         <Route exact path="/">
           <CalendarsListPage />
+        </Route>
+        <Route exact path="/fake/1">
+          <CalendarsListPageFake />
         </Route>
         <Route exact path="/calendar/:publicId">
           <CalendarPage />
