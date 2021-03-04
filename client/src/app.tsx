@@ -1,39 +1,19 @@
-import React from "react";
-import {
-  BrowserRouter,
-  Switch,
-  Route,
-  Link,
-  useRouteMatch,
-  useParams,
-} from "react-router-dom";
+import React, { useMemo } from "react";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { AppHeader, NotFoundPage } from "@shacal/ui/components";
+import { COLOR_VARS, FONT_SIZE_VARS, FONT_WEIGHT_VARS } from "@shacal/ui/kit";
 import { CalendarsListPage } from "./pages/calendars/calendars-list-page";
 import { CalendarPage } from "pages/calendars/calendar-page";
 import { NewEventPage } from "pages/events/new-event-page";
 import { EventPage } from "pages/events/event-page";
-
-function Fake({ title }: { title: string }) {
-  const match = useRouteMatch();
-  const params = useParams();
-  return (
-    <div>
-      <h2>{title}</h2>
-      <pre>{JSON.stringify({ params })}</pre>
-      <pre>{JSON.stringify({ match })}</pre>
-    </div>
-  );
-}
+import { Global, css } from "@emotion/react";
+import styled from "@emotion/styled";
 
 function Router() {
   return (
     <BrowserRouter>
-      <Link to="/">Home</Link>
-      <Link to="/calendar/qqqqqqqqq">Calendar</Link>
-      <Link to="/event/eeeeeeeeee">Event</Link>
-
       <Switch>
         <Route exact path="/">
           <CalendarsListPage />
@@ -55,13 +35,47 @@ function Router() {
   );
 }
 
-const queryClient = new QueryClient();
+function getGlobalStyles() {
+  return css`
+    :root {
+      ${COLOR_VARS}
+      ${FONT_SIZE_VARS}
+      ${FONT_WEIGHT_VARS}
+      font-family: "Inter", sans-serif;
+      font-size: 10px;
+    }
+    body {
+      font-size: var(--fs-m);
+      font-weight: var(--fw-default);
+      margin: 0;
+    }
+    button {
+      font-size: inherit;
+    }
+    a[disabled] {
+      pointer-events: none;
+    }
+  `;
+}
+
+const AppPanel = styled.div`
+  max-width: 350px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding-top: 10px;
+  box-shadow: 0px 0px 300px -60px var(--bg-p);
+`;
+
 export function App() {
+  const styles = useMemo(getGlobalStyles, []);
   return (
-    <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} />
-      <AppHeader />
-      <Router />
-    </QueryClientProvider>
+    <AppPanel>
+      <QueryClientProvider client={new QueryClient()}>
+        <ReactQueryDevtools initialIsOpen={false} />
+        <Global styles={styles} />
+        <AppHeader />
+        <Router />
+      </QueryClientProvider>
+    </AppPanel>
   );
 }

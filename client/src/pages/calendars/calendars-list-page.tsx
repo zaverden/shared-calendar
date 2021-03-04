@@ -1,8 +1,9 @@
 import { Page } from "@shacal/ui/components";
 import { useCalendarsList } from "@shacal/ui/hooks";
+import { Button, LinkButton } from "@shacal/ui/kit";
 import { useShareCalendar } from "hooks/useShareCalendar";
 import React, { Fragment } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 function Dot({ color }: { color: string }) {
   return <span style={{ color }}>&#11044;</span>;
@@ -23,15 +24,15 @@ function CalendarStatus({
   onShare,
 }: CalendarStatusProps) {
   if (publicId != null) {
-    return <Link to={`/calendar/${publicId}`}>Go</Link>;
+    return <LinkButton medium to={`/calendar/${publicId}`}>Go</LinkButton>;
   }
   if (isSharing && id === sharingId) {
     return <span>SHARING...</span>;
   }
   return (
-    <button onClick={() => onShare(id)} disabled={isSharing}>
+    <Button medium secondary onClick={() => onShare(id)} disabled={isSharing}>
       Share
-    </button>
+    </Button>
   );
 }
 
@@ -39,10 +40,16 @@ export function CalendarsListPage() {
   const { isLoading, error, data: calendars } = useCalendarsList();
   const share = useShareCalendar();
   return (
-    <Page title="Google Calendars" loading={isLoading} showAuth={error?.message === "401"}>
+    <Page
+      title="Google Calendars"
+      loading={isLoading}
+      showAuth={error?.message === "401"}
+    >
       {() => (
         <Fragment>
-          {share.isSuccess ? <Redirect to={`/calendar/${share.data}`} push /> : null}
+          {share.isSuccess ? (
+            <Redirect to={`/calendar/${share.data}`} push />
+          ) : null}
           <ul>
             {calendars?.map(({ id, summary, color, publicId }) => (
               <li key={id}>
