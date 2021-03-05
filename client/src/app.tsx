@@ -51,6 +51,7 @@ function getGlobalStyles() {
     body {
       font-size: var(--fs-m);
       font-weight: var(--fw-default);
+      color: var(--fg-p);
       margin: 0;
     }
     button {
@@ -67,7 +68,7 @@ const AppPanel = styled.div`
   min-height: 100vh;
   margin: 0 auto;
   padding: 10px 20px 0 20px;
-  box-shadow: 0px 0px 300px -60px var(--bg-p);
+  box-sizing: border-box;
 `;
 
 export function App() {

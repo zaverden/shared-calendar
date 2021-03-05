@@ -40,6 +40,20 @@ export function formatDate(date: Date) {
   return dateFormatter.format(date);
 }
 
+export function formatMinutes(minutesTotal: number): string {
+  const hours = Math.trunc(minutesTotal / 60);
+  const minutes = minutesTotal % 60;
+  const parts = [];
+
+  if (hours > 0) {
+    parts.push(`${hours} h`);
+  }
+  if (minutes > 0) {
+    parts.push(`${minutes} min`);
+  }
+  return parts.join(" ");
+}
+
 export const MS_IN_MINUTE = 60 * 1000;
 export function getDuration({ start, end }: { start: string; end: string }) {
   const diff = new Date(end).getTime() - new Date(start).getTime();
