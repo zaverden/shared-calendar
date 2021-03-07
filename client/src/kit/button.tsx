@@ -18,7 +18,6 @@ export const Button = styled("button", {
     typeof propName !== "string" || !filteredProps.has(propName),
 })<ButtonProps>`
   display: block;
-  width: 100%;
   box-sizing: border-box;
   text-decoration: none;
   text-align: center;

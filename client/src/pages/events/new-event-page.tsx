@@ -1,7 +1,7 @@
 import { Page } from "@shacal/ui/components";
-import { useCreateEvent } from "@shacal/ui/hooks";
+import { useCreateEvent, usePublicIdParam } from "@shacal/ui/hooks";
 import React, { Fragment } from "react";
-import { Redirect, useParams } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { EventForm } from "./event-form";
 
 const event = {
@@ -13,7 +13,7 @@ const event = {
 };
 
 export function NewEventPage() {
-  const { publicId } = useParams<{ publicId: string }>();
+  const publicId = usePublicIdParam();
   const create = useCreateEvent();
   return (
     <Page loading={false} title="New Event">

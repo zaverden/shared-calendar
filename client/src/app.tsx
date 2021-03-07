@@ -10,7 +10,7 @@ import { NewEventPage } from "pages/events/new-event-page";
 import { EventPage } from "pages/events/event-page";
 import { Global, css } from "@emotion/react";
 import styled from "@emotion/styled";
-import { CalendarsListPageFake } from "pages/calendars/calendars-list-page-fake";
+import { ApproveEmailPage } from "pages/events/approve-email-page";
 
 function Router() {
   return (
@@ -18,9 +18,6 @@ function Router() {
       <Switch>
         <Route exact path="/">
           <CalendarsListPage />
-        </Route>
-        <Route exact path="/fake/1">
-          <CalendarsListPageFake />
         </Route>
         <Route exact path="/calendar/:publicId">
           <CalendarPage />
@@ -30,6 +27,9 @@ function Router() {
         </Route>
         <Route exact path="/event/:publicId">
           <EventPage />
+        </Route>
+        <Route exact path="/event/:publicId/approve-email">
+          <ApproveEmailPage />
         </Route>
         <Route path="*">
           <NotFoundPage />

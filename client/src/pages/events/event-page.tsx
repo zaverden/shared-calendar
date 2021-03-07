@@ -1,14 +1,13 @@
 import { Page } from "@shacal/ui/components";
-import { useEvent, useUpdateEvent } from "@shacal/ui/hooks";
+import { useEvent, usePublicIdParam, useUpdateEvent } from "@shacal/ui/hooks";
 import React, { Fragment } from "react";
-import { useParams } from "react-router-dom";
 import { Attendees } from "./attendees";
 import { EventForm } from "./event-form";
 import { JoinEvent } from "./join-event";
 import { EventView } from "./event-view";
 
 export function EventPage() {
-  const { publicId } = useParams<{ publicId: string }>();
+  const publicId = usePublicIdParam();
   const event = useEvent(publicId);
   const update = useUpdateEvent();
   return (

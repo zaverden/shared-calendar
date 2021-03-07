@@ -1,8 +1,8 @@
 import { Page } from "@shacal/ui/components";
 import { ShacalEvent } from "@shacal/ui/data-access";
-import { useShacal } from "@shacal/ui/hooks";
+import { usePublicIdParam, useShacal } from "@shacal/ui/hooks";
 import React, { Fragment } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { formatDate } from "utils";
 import { Permissions } from "./permissions";
 
@@ -24,7 +24,7 @@ function EventCard({ event }: EventCardProps) {
 }
 
 export function CalendarPage() {
-  const { publicId } = useParams<{ publicId: string }>();
+  const publicId = usePublicIdParam();
   const shacal = useShacal(publicId);
   return (
     <Page
