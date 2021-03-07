@@ -6,6 +6,13 @@ import { useShareCalendar } from "hooks/useShareCalendar";
 import React, { Fragment } from "react";
 import { Redirect } from "react-router-dom";
 
+const GoLinkButton = styled(LinkButton)`
+  width: auto;
+`;
+const ShareButton = styled(Button)`
+  width: auto;
+`;
+
 function Dot({ color }: { color: string }) {
   return (
     <span aria-label="" style={{ color }}>
@@ -30,18 +37,23 @@ function CalendarStatus({
 }: CalendarStatusProps) {
   if (publicId != null) {
     return (
-      <LinkButton medium to={`/calendar/${publicId}`}>
+      <GoLinkButton medium to={`/calendar/${publicId}`}>
         Go
-      </LinkButton>
+      </GoLinkButton>
     );
   }
   if (isSharing && id === sharingId) {
     return <span>SHARING...</span>;
   }
   return (
-    <Button medium secondary onClick={() => onShare(id)} disabled={isSharing}>
+    <ShareButton
+      medium
+      secondary
+      onClick={() => onShare(id)}
+      disabled={isSharing}
+    >
       Share
-    </Button>
+    </ShareButton>
   );
 }
 

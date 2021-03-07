@@ -8,7 +8,6 @@ const emails = getEmails();
 
 const JoinButton = styled(Button)`
   margin: 8px 0;
-  width: 100%;
 
   & > span {
     font-weight: var(--fw-th);
@@ -17,7 +16,6 @@ const JoinButton = styled(Button)`
 
 const ApproveEmailLinkButton = styled(LinkButton)`
   margin: 8px 0;
-  width: 100%;
 `;
 
 type Event = { publicId: string };
