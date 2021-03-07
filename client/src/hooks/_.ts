@@ -1,3 +1,4 @@
+export * from "./useAuthorizeEmail";
 export * from "./useCalendarsList";
 export * from "./useCreateEvent";
 export * from "./useEvent";

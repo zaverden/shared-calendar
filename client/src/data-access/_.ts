@@ -1,3 +1,4 @@
+export * from "./authorizeEmail";
 export * from "./event";
 export * from "./loadCalendarsList";
 export * from "./loadShacal";

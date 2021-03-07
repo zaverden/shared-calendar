@@ -51,10 +51,9 @@ export function EventForm({ event, isSaving, onSave }: EventFormProps) {
   const [duration] = useState(() => getDuration(event) || DEFAULT_DURATION_MIN);
   const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const target = e.target as HTMLFormElement;
     const entries = ["summary", "start", "duration", "location"].map((f) => [
       f,
-      (target.elements.namedItem(f) as { value: string }).value ?? "",
+      (e.currentTarget.elements.namedItem(f) as { value: string }).value ?? "",
     ]);
     const values = Object.fromEntries(entries) as EventValues;
     const startDate = new Date(values.start);

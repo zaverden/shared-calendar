@@ -14,7 +14,7 @@ const JoinButton = styled(Button)`
   }
 `;
 
-const ApproveEmailLinkButton = styled(LinkButton)`
+const ConfirmEmailLinkButton = styled(LinkButton)`
   margin: 8px 0;
 `;
 
@@ -37,25 +37,25 @@ function ButtonsList({ onJoin, isLoading, publicId }: ButtonsListProps) {
           <span>Join as</span> {email}
         </JoinButton>
       ))}
-      <ApproveEmailPanel publicId={publicId} />
+      <ConfirmEmailPanel publicId={publicId} />
     </Fragment>
   );
 }
 
-function ApproveEmailPanel({ publicId }: Event) {
+function ConfirmEmailPanel({ publicId }: Event) {
   const message =
     emails.length === 0
-      ? "You have to approve your email in order to join the event."
-      : "You can approve another email.";
+      ? "You have to confirm your email in order to join the event."
+      : "You can confirm another email.";
   return (
     <Fragment>
       <p>{message}</p>
-      <ApproveEmailLinkButton
+      <ConfirmEmailLinkButton
         secondary={emails.length > 0}
-        to={`/event/${publicId}/approve-email`}
+        to={`/event/${publicId}/confirm-email`}
       >
-        Approve email
-      </ApproveEmailLinkButton>
+        Confirm email
+      </ConfirmEmailLinkButton>
     </Fragment>
   );
 }

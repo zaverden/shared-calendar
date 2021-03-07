@@ -10,7 +10,7 @@ import { NewEventPage } from "pages/events/new-event-page";
 import { EventPage } from "pages/events/event-page";
 import { Global, css } from "@emotion/react";
 import styled from "@emotion/styled";
-import { ApproveEmailPage } from "pages/events/approve-email-page";
+import { ConfirmEmailPage } from "pages/events/confirm-email-page";
 
 function Router() {
   return (
@@ -28,8 +28,8 @@ function Router() {
         <Route exact path="/event/:publicId">
           <EventPage />
         </Route>
-        <Route exact path="/event/:publicId/approve-email">
-          <ApproveEmailPage />
+        <Route exact path="/event/:publicId/confirm-email">
+          <ConfirmEmailPage />
         </Route>
         <Route path="*">
           <NotFoundPage />
