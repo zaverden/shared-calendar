@@ -2,7 +2,7 @@ import { sign, verify } from "jsonwebtoken";
 import * as R from "runtypes";
 import { HttpFunctionRequest, WrappedHandler } from "./begin";
 import { Dictionary } from "./ts-utils";
-import { getCookieValue } from "./utils";
+import { formatCookie, getCookieValue } from "./utils";
 
 const EmailsTokenPayload = R.Record({
   emails: R.Array(R.String),
@@ -63,13 +63,18 @@ export function buildConfirmedEmailsToken(
   return jwt;
 }
 
-const cookieAge = `Max-Age=${365 * 24 * 60 * 60}`;
+const cookieAge = 365 * 24 * 60 * 60;
 export function buildConfirmedEmailsCookie(
   emails: string[],
   cookieName: string,
   secret: string
 ): string {
-  const secure = process.env.NODE_ENV === "testing" ? "" : "Secure;";
   const token = buildConfirmedEmailsToken(emails, secret);
-  return `${cookieName}=${token};${cookieAge};${secure}Path=/`;
+  return formatCookie({
+    name: cookieName,
+    value: token,
+    maxAgeSeconds: cookieAge,
+    secure: process.env.NODE_ENV !== "testing",
+    httpOnly: false,
+  });
 }

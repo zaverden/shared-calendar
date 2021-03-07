@@ -3,7 +3,7 @@ import { HttpFunctionRequest, unauthorized, WrappedHandler } from "./begin";
 import { Result } from "./result";
 import { Dictionary } from "./ts-utils";
 import { getUser, User } from "./user/storage";
-import { getCookieValue } from "./utils";
+import { formatCookie, getCookieValue } from "./utils";
 
 export function buildAuthToken(userId: string, secret: string): string {
   const jwt = sign({ userId }, secret, {
@@ -43,10 +43,15 @@ function resolveJWT(jwt: string, secret: string): Result<string> {
   }
 }
 
-const authCookieAge = `Max-Age=${24 * 60 * 60}`;
+const authCookieAge = 24 * 60 * 60;
 export function buildAuthCookie(jwt: string, cookieName: string): string {
-  const secure = process.env.NODE_ENV === "testing" ? "" : "Secure;";
-  return `${cookieName}=${jwt};${authCookieAge};${secure}HttpOnly;Path=/`;
+  return formatCookie({
+    name: cookieName,
+    value: jwt,
+    maxAgeSeconds: authCookieAge,
+    secure: process.env.NODE_ENV !== "testing",
+    httpOnly: true,
+  });
 }
 
 function getJWTFromHeader(headers: Dictionary<string>): string | null {

@@ -75,3 +75,39 @@ export function getCookieValue(
   const cookie = cookies.find((c) => c.startsWith(prefix));
   return cookie?.replace(prefix, "") ?? null;
 }
+
+type Cookie = {
+  name: string;
+  value?: string;
+  maxAgeSeconds?: number;
+  secure?: boolean;
+  httpOnly?: boolean;
+};
+export function formatCookie({
+  name,
+  value,
+  maxAgeSeconds,
+  secure,
+  httpOnly,
+}: Cookie): string {
+  const parts = [`${name}=${value ?? ""}; Path=/`];
+  if (maxAgeSeconds != null) {
+    parts.push(`Max-Age=${maxAgeSeconds}`);
+  }
+  if (secure) {
+    parts.push("Secure");
+  }
+  if (httpOnly) {
+    parts.push("HttpOnly");
+  }
+  return parts.join("; ");
+}
+
+export function formatDeleteCookie(cookieName: string): string {
+  return formatCookie({
+    name: cookieName,
+    value: "",
+    maxAgeSeconds: -1,
+    httpOnly: true,
+  });
+}

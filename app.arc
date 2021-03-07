@@ -2,11 +2,10 @@
 begin-app
 
 @http
-get  /auth/:service/:method
+any  /auth/:service/:method
 get  /api/e/:publicId
 get  /api/c/list
 get  /api/c/s/:publicId
-post  /auth/email/:method
 post /api/c/s/:publicId/e
 post /api/c/s/:gid
 post /api/e/:publicId/join

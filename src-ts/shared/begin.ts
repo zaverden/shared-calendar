@@ -74,3 +74,15 @@ export function withBaseUrl<T extends unknown[]>(
     return handler(req, baseUrl, ...rest);
   };
 }
+
+export function withHttpMethodGuard<T extends unknown[]>(
+  method: string,
+  handler: WrappedHandler<T>
+): WrappedHandler<T> {
+  return async (req, ...rest) => {
+    if (req.requestContext.http.method !== method) {
+      return { statusCode: 405 };
+    }
+    return handler(req, ...rest);
+  };
+}
