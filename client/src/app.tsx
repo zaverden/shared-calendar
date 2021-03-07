@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { QueryClientProvider, QueryClient } from "react-query";
-import { AppHeader, NotFoundPage } from "@shacal/ui/components";
+import { AppFooter, AppHeader, NotFoundPage } from "@shacal/ui/components";
 import { COLOR_VARS, FONT_SIZE_VARS, FONT_WEIGHT_VARS } from "@shacal/ui/kit";
 import { CalendarsListPage } from "./pages/calendars/calendars-list-page";
 import { CalendarPage } from "pages/calendars/calendar-page";
@@ -80,6 +80,7 @@ export function App() {
         <Global styles={styles} />
         <AppHeader />
         <Router />
+        <AppFooter />
       </QueryClientProvider>
     </AppPanel>
   );

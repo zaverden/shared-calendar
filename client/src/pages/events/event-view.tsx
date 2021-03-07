@@ -32,11 +32,7 @@ const LocationAnchor = styled.a`
 function ExternalLinkIcon() {
   return (
     <svg viewBox="0 0 24 24">
-      <g
-        stroke="#72B3AC"
-        strokeWidth="1.5"
-        fill="none"
-      >
+      <g stroke="#72B3AC" strokeWidth="1.5" fill="none">
         <polyline points="17 13.5 17 19.5 5 19.5 5 7.5 11 7.5"></polyline>
         <path d="M14,4.5 L20,4.5 L20,10.5 M20,4.5 L11,13.5"></path>
       </g>
@@ -54,7 +50,11 @@ function LocationField({ location }: LocationFieldProps) {
   }
   if (urlRegex.test(location)) {
     return (
-      <LocationAnchor href={location} target="_blank" rel="noreferrer">
+      <LocationAnchor
+        href={location}
+        target="_blank"
+        rel="external nofollow noopener noreferrer"
+      >
         <ExternalLinkIcon />
         Go to online call
       </LocationAnchor>
