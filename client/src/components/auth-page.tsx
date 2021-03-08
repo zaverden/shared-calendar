@@ -1,15 +1,9 @@
 import React from "react";
-
-function getRootUrl(): string {
-  const { pathname, search } = window.location;
-  return pathname + search;
-}
-function getEncodedRootUrl(): string {
-  return encodeURIComponent(getRootUrl());
-}
+import { useEncodedReturnUrl } from "@shacal/ui/hooks";
 
 export function AuthPage() {
-  const authUrl = `/auth/google/_?r=${getEncodedRootUrl()}`;
+  const returnUrl = useEncodedReturnUrl();
+  const authUrl = `/auth/google/_?r=${returnUrl}`;
   return (
     <div>
       <p>

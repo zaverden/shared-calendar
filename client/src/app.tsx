@@ -12,30 +12,28 @@ import { Global, css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { ConfirmEmailPage } from "pages/events/confirm-email-page";
 
-function Router() {
+function Routes() {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/">
-          <CalendarsListPage />
-        </Route>
-        <Route exact path="/calendar/:publicId">
-          <CalendarPage />
-        </Route>
-        <Route exact path="/calendar/:publicId/new-event">
-          <NewEventPage />
-        </Route>
-        <Route exact path="/event/:publicId">
-          <EventPage />
-        </Route>
-        <Route exact path="/event/:publicId/confirm-email">
-          <ConfirmEmailPage />
-        </Route>
-        <Route path="*">
-          <NotFoundPage />
-        </Route>
-      </Switch>
-    </BrowserRouter>
+    <Switch>
+      <Route exact path="/">
+        <CalendarsListPage />
+      </Route>
+      <Route exact path="/calendar/:publicId">
+        <CalendarPage />
+      </Route>
+      <Route exact path="/calendar/:publicId/new-event">
+        <NewEventPage />
+      </Route>
+      <Route exact path="/event/:publicId">
+        <EventPage />
+      </Route>
+      <Route exact path="/event/:publicId/confirm-email">
+        <ConfirmEmailPage />
+      </Route>
+      <Route path="*">
+        <NotFoundPage />
+      </Route>
+    </Switch>
   );
 }
 
@@ -76,11 +74,13 @@ export function App() {
   return (
     <AppPanel>
       <QueryClientProvider client={new QueryClient()}>
-        <ReactQueryDevtools initialIsOpen={false} />
-        <Global styles={styles} />
-        <AppHeader />
-        <Router />
-        <AppFooter />
+        <BrowserRouter>
+          <ReactQueryDevtools initialIsOpen={false} />
+          <Global styles={styles} />
+          <AppHeader />
+          <Routes />
+          <AppFooter />
+        </BrowserRouter>
       </QueryClientProvider>
     </AppPanel>
   );
