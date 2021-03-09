@@ -14,8 +14,5 @@ export const Input = styled.input`
   &[disabled] {
     color: var(--fg-m);
   }
-
-  &:-internal-autofill-selected {
-    color: red !important;
-  }
 `;
+

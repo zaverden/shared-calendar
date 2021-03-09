@@ -1,9 +1,9 @@
 import "react-quill/dist/quill.snow.css";
 import { EventPayload } from "@shacal/ui/data-access";
 import React, { FormEvent, useState } from "react";
-import DatePicker from "react-datepicker";
 import ReactQuill from "react-quill";
 import { getDuration, MS_IN_MINUTE } from "utils";
+import { DatePicker, Input } from "@shacal/ui/kit";
 
 const DEFAULT_DURATION_MIN = 60;
 
@@ -71,7 +71,7 @@ export function EventForm({ event, isSaving, onSave }: EventFormProps) {
     <form onSubmit={onFormSubmit}>
       <label style={{ display: "block" }}>
         Summary
-        <input
+        <Input
           type="text"
           name="summary"
           defaultValue={event.summary}
@@ -96,7 +96,7 @@ export function EventForm({ event, isSaving, onSave }: EventFormProps) {
       </label>
       <label style={{ display: "block" }}>
         Duration (minutes)
-        <input
+        <Input
           type="number"
           name="duration"
           defaultValue={duration}
@@ -109,7 +109,7 @@ export function EventForm({ event, isSaving, onSave }: EventFormProps) {
       </label>
       <label style={{ display: "block" }}>
         Location
-        <input
+        <Input
           type="text"
           name="location"
           autoComplete="off"
