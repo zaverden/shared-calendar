@@ -5,6 +5,7 @@ export const COLOR_VARS = `
   --fg-placeholder: #BABABA;
   --bg-p: #00AA98;
   --bg-s: #515151;
+  --bg-m: #FFFFFF;
   --br-p: #C4C4C4;
 `;
 

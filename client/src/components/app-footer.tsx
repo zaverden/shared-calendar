@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import React from "react";
+import React, { Fragment } from "react";
 
 const Footer = styled.footer`
   display: flex;
@@ -8,6 +8,13 @@ const Footer = styled.footer`
   position: fixed;
   bottom: 0;
   padding: 10px 0;
+  background: var(--bg-m);
+`;
+
+const FooterPlaceholder = styled(Footer)`
+  position: relative;
+  opacity: 0;
+  margin-top: 10px;
 `;
 
 const Anchor = styled.a`
@@ -17,9 +24,15 @@ const Anchor = styled.a`
 
 export function AppFooter() {
   return (
-    <Footer>
-      <Anchor href="/privacy-policy.html">Policy</Anchor>
-      <Anchor href="/about-project.html">About</Anchor>
-    </Footer>
+    <Fragment>
+      <FooterPlaceholder>
+        <Anchor href="/privacy-policy.html">Policy</Anchor>
+        <Anchor href="/about-project.html">About</Anchor>
+      </FooterPlaceholder>
+      <Footer>
+        <Anchor href="/privacy-policy.html">Policy</Anchor>
+        <Anchor href="/about-project.html">About</Anchor>
+      </Footer>
+    </Fragment>
   );
 }

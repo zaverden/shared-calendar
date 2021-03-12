@@ -14,6 +14,7 @@ export function getGlobalStyles() {
       font-size: var(--fs-m);
       font-weight: var(--fw-default);
       color: var(--fg-p);
+      background: var(--bg-m);
       margin: 0;
     }
     button {

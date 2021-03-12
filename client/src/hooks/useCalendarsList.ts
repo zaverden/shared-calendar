@@ -9,6 +9,7 @@ export function useCalendarsList(): UseQueryResult<Calendar[], Error> {
     retry(failureCount: number, error: Error) {
       return error.message !== "401" && failureCount < 3;
     },
+    refetchOnWindowFocus: false,
   });
 }
 

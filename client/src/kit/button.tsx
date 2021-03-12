@@ -17,11 +17,13 @@ export const Button = styled("button", {
   shouldForwardProp: (propName) =>
     typeof propName !== "string" || !filteredProps.has(propName),
 })<ButtonProps>`
-  display: block;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  align-items: center;
   width: 100%;
   box-sizing: border-box;
   text-decoration: none;
-  text-align: center;
   cursor: pointer;
   color: #fff;
   border: 0;
