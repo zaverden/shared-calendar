@@ -83,6 +83,7 @@ export async function getFollowingEvents(
     singleEvents: true,
     timeMin: new Date().toISOString(),
     timeZone: "UTC",
+    maxResults: 20,
   });
 
   return (

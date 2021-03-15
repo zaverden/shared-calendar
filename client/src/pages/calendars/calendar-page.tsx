@@ -48,6 +48,12 @@ export function CalendarPage() {
               <EventCard key={event.publicId} event={event} />
             ))}
           </ul>
+          {shacal.data?.events.length === 20 ? (
+            <p>
+              You can see only 20 nearest events. You'll see future events
+              later.
+            </p>
+          ) : null}
         </Fragment>
       )}
     </Page>
