@@ -22,11 +22,14 @@ const Success = styled.p`
 `;
 
 export function ConfirmEmailPage() {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(
+    localStorage.getItem("lastConfirmedEmail") ?? ""
+  );
   const publicId = usePublicIdParam();
   const auth = useAuthorizeEmail();
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    localStorage.setItem("lastConfirmedEmail", email);
     auth.mutate({
       email,
       returnUrl: `/event/${publicId}`,
