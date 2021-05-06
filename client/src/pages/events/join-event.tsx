@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { useJoinEvent } from "@shacal/ui/hooks";
-import { Button, LinkButton } from "@shacal/ui/kit";
+import { Button, Link, LinkButton } from "@shacal/ui/kit";
 import React, { Fragment } from "react";
 import { getEmails } from "utils";
 
@@ -37,19 +37,19 @@ function ButtonsList({ onJoin, isLoading, publicId }: ButtonsListProps) {
           <span>Join as</span> {email}
         </JoinButton>
       ))}
-      <ConfirmEmailPanel publicId={publicId} />
+      {emails.length === 0 ? (
+        <ConfirmEmailPanel publicId={publicId} />
+      ) : (
+        <ConfirmAnotherEmailPanel publicId={publicId} />
+      )}
     </Fragment>
   );
 }
 
 function ConfirmEmailPanel({ publicId }: Event) {
-  const message =
-    emails.length === 0
-      ? "You have to confirm your email in order to join the event."
-      : "You can confirm another email.";
   return (
     <Fragment>
-      <p>{message}</p>
+      <p>You have to confirm your email in order to join the event.</p>
       <ConfirmEmailLinkButton
         secondary={emails.length > 0}
         to={`/event/${publicId}/confirm-email`}
@@ -57,6 +57,15 @@ function ConfirmEmailPanel({ publicId }: Event) {
         Confirm email
       </ConfirmEmailLinkButton>
     </Fragment>
+  );
+}
+
+function ConfirmAnotherEmailPanel({ publicId }: Event) {
+  return (
+    <p>
+      or you can{" "}
+      <Link to={`/event/${publicId}/confirm-email`}>confirm another email</Link>
+    </p>
   );
 }
 

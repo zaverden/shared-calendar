@@ -2,7 +2,7 @@ import { Page } from "@shacal/ui/components";
 import { ShacalEvent } from "@shacal/ui/data-access";
 import { usePublicIdParam, useShacal } from "@shacal/ui/hooks";
 import React, { Fragment } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "@shacal/ui/kit";
 import { formatDate } from "utils";
 import { Permissions } from "./permissions";
 
