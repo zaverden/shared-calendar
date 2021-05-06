@@ -1,6 +1,7 @@
 import * as D from "@begin/data";
 import * as R from "runtypes";
 import sendgrid from "@sendgrid/mail";
+import { ClientResponse } from "@sendgrid/client/src/response";
 import { Result } from "./result";
 import {
   getSendgridApiKey,
@@ -9,7 +10,20 @@ import {
   getTTL,
 } from "./utils";
 
-sendgrid.setApiKey(getSendgridApiKey());
+// NOTE: for local dev sendgrid is optional
+const sendgridApiKey = getSendgridApiKey();
+if (sendgridApiKey != null) {
+  sendgrid.setApiKey(sendgridApiKey);
+}
+
+type SendFn = typeof sendgrid["send"];
+const sendEmail: SendFn =
+  sendgridApiKey != null
+    ? sendgrid.send.bind(sendgrid)
+    : (payload) => {
+        console.log("email send", payload);
+        return Promise.resolve([{} as ClientResponse, {}]);
+      };
 
 const EMAILS_MIN_INTERVAL = 2 * 60 * 1000;
 
@@ -29,7 +43,7 @@ export async function sentAuthEmail(
       };
     }
 
-    await sendgrid.send({
+    await sendEmail({
       from: { email: getSendgridFromAddress(), name: "ShaCal no-reply" },
       to: email,
       templateId: getSendgridAuthEmailTemplate(),

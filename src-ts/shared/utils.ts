@@ -1,3 +1,7 @@
+function deployedEnv(): boolean {
+  return process.env.NODE_ENV !== "testing";
+}
+
 export function getJWTSecret(): string {
   if (process.env.JWT_SECRET === undefined) {
     throw new Error("JWT_SECRET is not provided");
@@ -5,8 +9,9 @@ export function getJWTSecret(): string {
   return process.env.JWT_SECRET;
 }
 
-export function getSendgridApiKey(): string {
-  if (process.env.SENDGRID_API_KEY === undefined) {
+export function getSendgridApiKey(): string | undefined {
+  // NOTE: Sendgrid API key is optional for local dev
+  if (process.env.SENDGRID_API_KEY === undefined && deployedEnv()) {
     throw new Error("SENDGRID_API_KEY is not provided");
   }
   return process.env.SENDGRID_API_KEY;

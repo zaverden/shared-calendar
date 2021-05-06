@@ -10,10 +10,9 @@ NODE_ENV=testing
 JWT_SECRET=local
 GOOGLE_CLIENT_ID=**************.apps.googleusercontent.com
 GOOGLE_CLIENT_SECRET=**************
-GOOGLE_PROJECT_ID=shared-=**************
-SENDGRID_API_KEY==**************
-SENDGRID_FROM_ADDRESS==**************
-SENDGRID_AUTH_EMAIL_TEMPLATE==**************
+GOOGLE_PROJECT_ID=shared-**************
+SENDGRID_FROM_ADDRESS=shacal@localhost
+SENDGRID_AUTH_EMAIL_TEMPLATE=none
 ```
 
 and then run the app with
