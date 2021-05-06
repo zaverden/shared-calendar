@@ -13,7 +13,7 @@ export function Attendees({ attendees }: AttendeesProps) {
   }
   return (
     <details>
-      <summary>Attendees</summary>
+      <summary>Attendees ({attendees.length})</summary>
       {attendees.map(({ email, status }, i) => (
         <p key={i}>
           {statusMap[status]}&nbsp;{email}
