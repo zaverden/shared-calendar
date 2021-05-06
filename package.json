@@ -10,7 +10,7 @@
     "dcc": "docker-compose up"
   },
   "devDependencies": {
-    "@architect/sandbox": "3.3.6",
+    "@architect/sandbox": "3.4.2",
     "@begin/data": "latest",
     "@sendgrid/mail": "7.4.2",
     "@tsconfig/node10": "1.0.7",

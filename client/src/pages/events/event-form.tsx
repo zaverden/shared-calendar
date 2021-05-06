@@ -1,9 +1,9 @@
 import "react-quill/dist/quill.snow.css";
-import { EventPayload } from "@shacal/ui/data-access";
 import React, { FormEvent, useState } from "react";
 import ReactQuill from "react-quill";
-import { getDuration, MS_IN_MINUTE } from "utils";
+import { EventPayload } from "@shacal/ui/data-access";
 import { DatePicker, Input } from "@shacal/ui/kit";
+import { getDuration, MS_IN_MINUTE } from "utils";
 
 const DEFAULT_DURATION_MIN = 60;
 
@@ -48,20 +48,24 @@ export function EventForm({ event, isSaving, onSave }: EventFormProps) {
     event.start === "" ? null : new Date(event.start)
   );
   const [description, setDescription] = useState<string>(event.description);
-  const [duration] = useState(() => getDuration(event) || DEFAULT_DURATION_MIN);
+  const [defaultDuration] = useState(
+    () => getDuration(event) || DEFAULT_DURATION_MIN
+  );
   const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const entries = ["summary", "start", "duration", "location"].map((f) => [
+    if (startDate == null) {
+      return;
+    }
+    const entries = ["summary", "duration", "location"].map((f) => [
       f,
       (e.currentTarget.elements.namedItem(f) as { value: string }).value ?? "",
     ]);
     const values = Object.fromEntries(entries) as EventValues;
-    const startDate = new Date(values.start);
-    const duration = parseInt(values.duration);
+    const duration = parseInt(values.duration, 10);
     const endDate = new Date(startDate.getTime() + duration * MS_IN_MINUTE);
     onSave({
       summary: values.summary,
-      description: description,
+      description,
       location: values.location,
       start: startDate.toISOString(),
       end: endDate.toISOString(),
@@ -86,7 +90,7 @@ export function EventForm({ event, isSaving, onSave }: EventFormProps) {
           onChange={(d) => setStartDate(d as Date)}
           required
           autoComplete="off"
-          dateFormat="Pp"
+          dateFormat="PPp"
           showTimeSelect
           timeIntervals={15}
           selected={startDate}
@@ -99,7 +103,7 @@ export function EventForm({ event, isSaving, onSave }: EventFormProps) {
         <Input
           type="number"
           name="duration"
-          defaultValue={duration}
+          defaultValue={defaultDuration}
           required
           autoComplete="off"
           disabled={isSaving}

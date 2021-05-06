@@ -19,7 +19,7 @@ function onRebuild() {
     target: "node10.9.0",
     format: "cjs",
     bundle: true,
-    sourcemap: false,
+    sourcemap: watch,
     minify: true,
     watch: watch ? { onRebuild } : false,
   });
