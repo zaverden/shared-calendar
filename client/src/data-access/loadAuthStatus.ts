@@ -1,10 +1,14 @@
 import { tryGetJsonMessage } from "utils";
 
-export async function loadAuthStatus(): Promise<boolean> {
+export type AuthStatus = {
+  authenticated: boolean;
+  userEmail: string;
+};
+export async function loadAuthStatus(): Promise<AuthStatus> {
   const res = await fetch("/auth/status/_");
   if (res.status === 200) {
     const json = await res.json();
-    return json.authenticated;
+    return json;
   }
   throw new Error(
     res.status === 400

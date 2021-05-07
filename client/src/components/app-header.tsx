@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { useAuthStatus, useEncodedReturnUrl } from "@shacal/ui/hooks";
+import { Anchor } from "@shacal/ui/kit";
 import React, { Fragment } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { AppLoader } from "./app-loader";
@@ -25,47 +26,68 @@ const Slogan = styled.p`
 `;
 
 const AuthPanel = styled.div`
-  float: right;
-  margin-left: -100%;
-  width: 1em;
   height: 1em;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 5px;
 
-  & > a > img {
-    width: 100%;
-    height: 100%;
+  & > span {
+    align-self: flex-end;
+    font-size: var(--fs-s);
   }
+
+  & > a {
+    font-size: var(--fs-s);
+    text-decoration: none;
+
+    & > img {
+      width: 1em;
+      height: 1em;
+      margin-bottom: -0.1em;
+    }
+  }
+`;
+
+const AuthLoader = styled(AppLoader)`
+  height: 1em;
+  width: 1em;
+  padding-bottom: unset;
 `;
 
 function LoginLink() {
   const returnUrl = useEncodedReturnUrl();
   return (
-    <a href={`/auth/google/_?r=${returnUrl}`} title="Login with google">
-      <img src="/google-icon.svg" alt="" />
-    </a>
+    <Anchor href={`/auth/google/_?r=${returnUrl}`} title="Login with google">
+      Login with <img src="/google-icon.svg" alt="" />
+    </Anchor>
   );
 }
-function LogoutLink() {
+function LogoutLink({ email }: { email: string }) {
   const returnUrl = useEncodedReturnUrl();
   return (
-    <a href={`/auth/logout/_?r=${returnUrl}`} title="Logout">
-      <img src="/logout.svg" alt="" />
-    </a>
+    <Fragment>
+      <span>{email}</span>
+      <a href={`/auth/logout/_?r=${returnUrl}`} title="Logout">
+        <img src="/logout.svg" alt="" />
+      </a>
+    </Fragment>
   );
 }
 
 function Auth() {
   const authorized = useAuthStatus();
   const { pathname } = useLocation();
-  if (pathname === "/" && authorized.data !== true) {
+  if (pathname === "/" && authorized.data?.authenticated !== true) {
     return null;
   }
 
   function render() {
     if (authorized.isLoading) {
-      return <AppLoader />;
+      return <AuthLoader />;
     }
-    if (authorized.data) {
-      return <LogoutLink />;
+    if (authorized.data?.authenticated === true) {
+      return <LogoutLink email={authorized.data.userEmail} />;
     }
     return <LoginLink />;
   }

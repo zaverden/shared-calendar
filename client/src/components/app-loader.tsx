@@ -43,9 +43,9 @@ const Loader = styled.div`
   }
 `;
 
-export function AppLoader() {
+export function AppLoader({ className }: { className?: string }) {
   return (
-    <Loader>
+    <Loader className={className}>
       <div />
       <div />
     </Loader>
