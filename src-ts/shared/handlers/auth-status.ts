@@ -1,11 +1,6 @@
-import {
-  HttpFunctionResponse,
-} from "@architect/shared/begin";
+import { HttpFunctionResponse } from "@architect/shared/begin";
 import { withOptionalUser } from "../auth";
-import {
-  getJWTCookieName,
-  getJWTSecret,
-} from "../utils";
+import { getJWTCookieName, getJWTSecret } from "../utils";
 
 export const handler = withOptionalUser(
   getJWTCookieName(),
@@ -13,7 +8,10 @@ export const handler = withOptionalUser(
   async (_, user): Promise<HttpFunctionResponse> => {
     return {
       statusCode: 200,
-      body: JSON.stringify({ authenticated: user != null }),
+      body: JSON.stringify({
+        authenticated: user != null,
+        userEmail: user?.email,
+      }),
     };
   }
 );
