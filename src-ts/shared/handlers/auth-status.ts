@@ -11,6 +11,7 @@ export const handler = withOptionalUser(
       body: JSON.stringify({
         authenticated: user != null,
         userEmail: user?.email,
+        myEvents: user == null ? undefined : Object.values(user.myEvents ?? {}),
       }),
     };
   }

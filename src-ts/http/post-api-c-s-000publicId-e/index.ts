@@ -8,7 +8,7 @@ import { authorizeGoogleApi } from "@architect/shared/google/auth";
 import { getAuthClient } from "@architect/shared/google/auth-client";
 import { EventPayload, insertEvent } from "@architect/shared/google/calendar";
 import { ensureEvents } from "@architect/shared/shacal-events";
-import { User } from "@architect/shared/user/storage";
+import { updateMyEvent, User } from "@architect/shared/user/storage";
 import {
   emailMatch,
   getJWTCookieName,
@@ -78,6 +78,8 @@ export const handler = withBaseUrl(
         user.userId,
         user.userId
       );
+
+      await updateMyEvent(user, ensuredEvents[0]!);
 
       return {
         statusCode: 200,

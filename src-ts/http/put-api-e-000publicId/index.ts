@@ -7,12 +7,9 @@ import {
 import { parseJsonBody } from "@architect/shared/body-parser";
 import { authorizeGoogleApi } from "@architect/shared/google/auth";
 import { getAuthClient } from "@architect/shared/google/auth-client";
-import {
-  EventPayload,
-  updateEvent,
-} from "@architect/shared/google/calendar";
+import { EventPayload, updateEvent } from "@architect/shared/google/calendar";
 import { getShacalEvent } from "@architect/shared/shacal-events";
-import { User } from "@architect/shared/user/storage";
+import { updateMyEvent, User } from "@architect/shared/user/storage";
 import { getJWTCookieName, getJWTSecret } from "@architect/shared/utils";
 
 export const handler = withBaseUrl(
@@ -80,6 +77,8 @@ export const handler = withBaseUrl(
         location: rawEvent.location,
         attendees: rawEvent.attendees,
       };
+
+      await updateMyEvent(user, event);
 
       return {
         statusCode: 200,
