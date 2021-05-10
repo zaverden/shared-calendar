@@ -7,7 +7,7 @@ const USER_TABLE = "USERS";
 const MyEvent = R.Record({
   publicId: R.String,
   summary: R.String,
-  start: R.String,
+  end: R.String,
 });
 export type MyEvent = R.Static<typeof MyEvent>;
 
@@ -61,12 +61,12 @@ export async function updateMyEvent(user: User, event: MyEvent): Promise<void> {
   }
 
   // include only expected fields
-  const { publicId, start, summary } = event;
+  const { publicId, end, summary } = event;
   const updatedUser = {
     ...user,
     myEvents: {
       ...user.myEvents,
-      [event.publicId]: { publicId, start, summary },
+      [event.publicId]: { publicId, end, summary },
     },
   };
   await updateUser(updatedUser);
@@ -74,6 +74,6 @@ export async function updateMyEvent(user: User, event: MyEvent): Promise<void> {
 
 function areEventsEqual(a: MyEvent, b: MyEvent): boolean {
   return (
-    a.publicId === b.publicId && a.start === b.start && a.summary === b.summary
+    a.publicId === b.publicId && a.end === b.end && a.summary === b.summary
   );
 }
