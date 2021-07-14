@@ -26,12 +26,17 @@ export const Button = styled("button", {
   text-decoration: none;
   cursor: pointer;
   color: #fff;
-  border: 0;
+  border: none;
   border-radius: 4px;
-  font-weight: var(--fw-b);
+  font-weight: var(--fw-th);
   background-color: ${({ secondary }) => bg(secondary)};
   padding: ${({ medium: medium }) => (medium ? "8px" : "10px")};
   opacity: ${({ disabled }) => (!disabled ? 1 : 0.5)};
+  transition: 0.3s;
+
+  &:hover {
+    opacity: 0.5;
+  }
 `;
 
 export const LinkButton = Button.withComponent(Link);
