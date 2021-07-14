@@ -8,20 +8,21 @@ import { AppLoader } from "./app-loader";
 const Logo = styled.img`
   display: block;
   margin: 0 auto;
-  max-width: 60%;
+  max-width: 210px;
+  width: 100%;
   height: auto;
 `;
 
 const Slogan = styled.p`
   display: block;
-  margin: 0 auto;
+  margin: 15px auto 40px;
   width: fit-content;
   font-size: var(--fs-s);
-  line-height: 2em;
-
+  font-weight: var(--fw-th);
+  line-height: 1.2;
+  
   & > span {
     color: var(--fg-a);
-    font-weight: var(--fw-b);
   }
 `;
 

@@ -1,5 +1,6 @@
 import { useSaveShacalPermissions } from "hooks/useSaveShacalPermissions";
 import React, { ChangeEvent, useState } from "react";
+import { Button, Input } from "@shacal/ui/kit";
 
 type PermissionsProps = {
   publicId: string;
@@ -29,25 +30,26 @@ export function Permissions({
     });
   };
   return (
-    <details>
+    <details style={{ margin: '16px 0 20px' }}>
       <summary>Granted add permission</summary>
       {list.map((p, i) => (
-        <input
+        <Input
           key={i}
           type="text"
           value={p}
           onChange={onChange(i)}
           disabled={isFetching || save.isLoading}
-          style={{ display: "block" }}
+          style={{ display: "block", marginBottom: "12px" }}
         />
       ))}
-      <button
+      <Button
         type="button"
         disabled={isFetching || save.isLoading}
         onClick={onSaveClick}
+        style={{ backgroundColor: "#515151", marginTop: "16px", maxWidth: "112px" }}
       >
         Save
-      </button>
+      </Button>
     </details>
   );
 }

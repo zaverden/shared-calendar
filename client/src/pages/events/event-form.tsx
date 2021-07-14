@@ -2,7 +2,7 @@ import "react-quill/dist/quill.snow.css";
 import React, { FormEvent, useState } from "react";
 import ReactQuill from "react-quill";
 import { EventPayload } from "@shacal/ui/data-access";
-import { DatePicker, Input } from "@shacal/ui/kit";
+import { DatePicker, Input, Button } from "@shacal/ui/kit";
 import { getDuration, MS_IN_MINUTE } from "utils";
 
 const DEFAULT_DURATION_MIN = 60;
@@ -73,7 +73,8 @@ export function EventForm({ event, isSaving, onSave }: EventFormProps) {
   };
   return (
     <form onSubmit={onFormSubmit}>
-      <label style={{ display: "block" }}>
+      <h2>Create New Event</h2>
+      <label style={{ display: "block", marginBottom: "18px" }}>
         Summary
         <Input
           type="text"
@@ -84,7 +85,7 @@ export function EventForm({ event, isSaving, onSave }: EventFormProps) {
           disabled={isSaving}
         />
       </label>
-      <label style={{ display: "block" }}>
+      <label style={{ display: "block", marginBottom: "18px" }}>
         Start
         <DatePicker
           onChange={(d) => setStartDate(d as Date)}
@@ -98,7 +99,7 @@ export function EventForm({ event, isSaving, onSave }: EventFormProps) {
           disabled={isSaving}
         />
       </label>
-      <label style={{ display: "block" }}>
+      <label style={{ display: "block", marginBottom: "18px" }}>
         Duration (minutes)
         <Input
           type="number"
@@ -111,7 +112,7 @@ export function EventForm({ event, isSaving, onSave }: EventFormProps) {
           min={15}
         />
       </label>
-      <label style={{ display: "block" }}>
+      <label style={{ display: "block", marginBottom: "18px" }}>
         Location
         <Input
           type="text"
@@ -132,9 +133,11 @@ export function EventForm({ event, isSaving, onSave }: EventFormProps) {
           onChange={setDescription}
         />
       </div>
-      <button type="submit" disabled={isSaving}>
-        Save
-      </button>
+      <Button type="submit"
+              disabled={isSaving}
+              style={{ height: "44px", marginTop: "18px", background: "#515151" }}>
+        Create event
+      </Button>
     </form>
   );
 }
