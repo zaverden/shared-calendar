@@ -7,7 +7,7 @@ import { formatDate } from "utils";
 import { Permissions } from "./permissions";
 
 function AddEventLink({ publicId }: { publicId: string }) {
-  return <Link to={`/calendar/${publicId}/new-event`}>+ Add event</Link>;
+  return <Link className="createNewEvent" to={`/calendar/${publicId}/new-event`}>Create New Event</Link>;
 }
 
 type EventCardProps = {
@@ -35,6 +35,7 @@ export function CalendarPage() {
     >
       {() => (
         <Fragment>
+          {shacal.data?.canAdd ? <AddEventLink publicId={publicId} /> : null}
           {shacal.data?.owned ? (
             <Permissions
               publicId={publicId}
@@ -42,8 +43,7 @@ export function CalendarPage() {
               addPermissionGrantedTo={shacal.data.addPermissionGrantedTo ?? []}
             />
           ) : null}
-          {shacal.data?.canAdd ? <AddEventLink publicId={publicId} /> : null}
-          <ul>
+          <ul style={{ padding: "0", marginTop: "0" }}>
             {shacal.data?.events.map((event) => (
               <EventCard key={event.publicId} event={event} />
             ))}
