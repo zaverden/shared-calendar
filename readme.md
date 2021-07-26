@@ -4,6 +4,19 @@
 
 ## Getting started
 
+Restore `package.json` in the `client` folder (run in repo root):
+```bash
+cp ./client/package_.json ./client/package.json
+```
+
+Install packages (run in repo root):
+```
+npm install
+pushd ./client
+npm install
+popd
+```
+
 Create `local.env` file at the project root with variables:
 ```
 NODE_ENV=testing
