@@ -2,7 +2,7 @@ import "react-quill/dist/quill.snow.css";
 import React, { FormEvent, useState } from "react";
 import ReactQuill from "react-quill";
 import { EventPayload } from "@shacal/ui/data-access";
-import { DatePicker, Input, Button } from "@shacal/ui/kit";
+import { DatePicker, Input } from "@shacal/ui/kit";
 import { getDuration, MS_IN_MINUTE } from "utils";
 
 const DEFAULT_DURATION_MIN = 60;
@@ -45,11 +45,11 @@ const formats = [
 
 export function EventForm({ event, isSaving, onSave }: EventFormProps) {
   const [startDate, setStartDate] = useState<Date | null>(
-    event.start === "" ? null : new Date(event.start)
+      event.start === "" ? null : new Date(event.start)
   );
   const [description, setDescription] = useState<string>(event.description);
   const [defaultDuration] = useState(
-    () => getDuration(event) || DEFAULT_DURATION_MIN
+      () => getDuration(event) || DEFAULT_DURATION_MIN
   );
   const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -72,72 +72,67 @@ export function EventForm({ event, isSaving, onSave }: EventFormProps) {
     });
   };
   return (
-    <form onSubmit={onFormSubmit}>
-      <h2>Create New Event</h2>
-      <label style={{ display: "block", marginBottom: "18px" }}>
+      <form onSubmit={onFormSubmit}>
         Summary
         <Input
-          type="text"
-          name="summary"
-          defaultValue={event.summary}
-          required
-          autoComplete="off"
-          disabled={isSaving}
+            type="text"
+            name="summary"
+            defaultValue={event.summary}
+            required
+            autoComplete="off"
+            disabled={isSaving}
         />
-      </label>
-      <label style={{ display: "block", marginBottom: "18px" }}>
-        Start
-        <DatePicker
-          onChange={(d) => setStartDate(d as Date)}
-          required
-          autoComplete="off"
-          dateFormat="PPp"
-          showTimeSelect
-          timeIntervals={15}
-          selected={startDate}
-          name="start"
-          disabled={isSaving}
-        />
-      </label>
-      <label style={{ display: "block", marginBottom: "18px" }}>
-        Duration (minutes)
-        <Input
-          type="number"
-          name="duration"
-          defaultValue={defaultDuration}
-          required
-          autoComplete="off"
-          disabled={isSaving}
-          step={15}
-          min={15}
-        />
-      </label>
-      <label style={{ display: "block", marginBottom: "18px" }}>
-        Location
-        <Input
-          type="text"
-          name="location"
-          autoComplete="off"
-          defaultValue={event.location}
-          disabled={isSaving}
-        />
-      </label>
-      <div>
-        Description
-        <ReactQuill
-          theme="snow"
-          placeholder="Describe an event"
-          modules={modules}
-          formats={formats}
-          value={description}
-          onChange={setDescription}
-        />
-      </div>
-      <Button type="submit"
+        <label style={{ display: "block" }}>
+          Start
+          <DatePicker
+              onChange={(d) => setStartDate(d as Date)}
+              required
+              autoComplete="off"
+              dateFormat="PPp"
+              showTimeSelect
+              timeIntervals={15}
+              selected={startDate}
+              name="start"
               disabled={isSaving}
-              style={{ height: "44px", marginTop: "18px", background: "#515151" }}>
-        Create event
-      </Button>
-    </form>
+          />
+        </label>
+        <label style={{ display: "block" }}>
+          Duration (minutes)
+          <Input
+              type="number"
+              name="duration"
+              defaultValue={defaultDuration}
+              required
+              autoComplete="off"
+              disabled={isSaving}
+              step={15}
+              min={15}
+          />
+        </label>
+        <label style={{ display: "block" }}>
+          Location
+          <Input
+              type="text"
+              name="location"
+              autoComplete="off"
+              defaultValue={event.location}
+              disabled={isSaving}
+          />
+        </label>
+        <div>
+          Description
+          <ReactQuill
+              theme="snow"
+              placeholder="Describe an event"
+              modules={modules}
+              formats={formats}
+              value={description}
+              onChange={setDescription}
+          />
+        </div>
+        <button type="submit" disabled={isSaving}>
+          Save
+        </button>
+      </form>
   );
 }

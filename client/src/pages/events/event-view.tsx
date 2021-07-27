@@ -9,7 +9,7 @@ const Summary = styled.h1`
 `;
 
 const MutedLabel = styled.label`
-  font-size: var(--fs-xs);
+  font-size: var(--fs-s);
   color: var(--fg-m);
 `;
 
@@ -17,7 +17,6 @@ const Field = styled.p`
   font-size: var(--fs-xl);
   color: var(--fg-p);
   margin-top: 0;
-  margin-bottom: 16px;
 `;
 
 const LocationAnchor = styled.a`

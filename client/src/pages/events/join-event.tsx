@@ -14,17 +14,6 @@ const JoinButton = styled(Button)`
   }
 `;
 
-const JoinedSuccessfully = styled.p`
-  box-sizing: border-box;
-  width: 100%;
-  padding: 10px;
-  border-radius: 2px;
-  text-align: center;
-  font-weight: normal;
-  color: #00A52E;
-  background: #E4FFE3;
-`;
-
 const ConfirmEmailLinkButton = styled(LinkButton)`
   margin: 8px 0;
 `;
@@ -44,7 +33,6 @@ function ButtonsList({ onJoin, isLoading, publicId }: ButtonsListProps) {
           type="button"
           onClick={() => onJoin(email)}
           disabled={isLoading}
-          style={{ height: "44px", marginTop: "18px" }}
         >
           <span>Join as</span> {email}
         </JoinButton>
@@ -76,7 +64,7 @@ function ConfirmAnotherEmailPanel({ publicId }: Event) {
   return (
     <p>
       or you can{" "}
-      <Link className="confirmAnotherEmail" to={`/event/${publicId}/confirm-email`}>confirm another email</Link>
+      <Link to={`/event/${publicId}/confirm-email`}>confirm another email</Link>
     </p>
   );
 }
@@ -87,7 +75,7 @@ export function JoinEvent({ publicId }: Event) {
     <Fragment>
       {join.isError ? <p>{join.error?.message}</p> : null}
       {join.isSuccess ? (
-        <JoinedSuccessfully>You have successfully joined</JoinedSuccessfully>
+        <p>You have successfully joined</p>
       ) : (
         <ButtonsList
           publicId={publicId}

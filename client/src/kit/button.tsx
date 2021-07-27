@@ -35,7 +35,7 @@ export const Button = styled("button", {
   transition: 0.3s;
 
   &:hover {
-    opacity: 0.5;
+    box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2);
   }
 `;
 

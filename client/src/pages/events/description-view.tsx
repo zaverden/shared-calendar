@@ -7,7 +7,7 @@ export function DescriptionView({ description }: { description: string }) {
   return (
     <div
       className="ql-editor"
-      style={{ padding: "0", fontWeight: "500", fontSize: "18px", color: "#202020" }}
+      style={{ fontWeight: "500", fontSize: "18px", color: "#202020" }}
       dangerouslySetInnerHTML={{ __html: sanitized }}
     />
   );
