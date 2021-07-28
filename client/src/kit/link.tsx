@@ -12,7 +12,7 @@ export const Anchor = styled("a")`
   transition: 0.3s;
   
   &:hover {
-    opacity: 0.5;
+    text-decoration: underline;
   }
   
   &.createNewEvent {
@@ -27,6 +27,11 @@ export const Anchor = styled("a")`
     border-radius: 4px;
     color: var(--bg-m);
     background: #00B5A1;
+
+    &:hover {
+      text-decoration: none;
+      box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2);
+    }
   }
   
   &.confirmAnotherEmail {
