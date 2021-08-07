@@ -60,13 +60,12 @@ function CalendarStatus({
 const List = styled.ul`
   list-style-type: none;
   padding-inline: 0;
-  margin: 0;
 `;
 
 const Line = styled.li`
   display: flex;
   align-items: baseline;
-  padding: 14px 0 10px;
+  padding: 1em 0;
   gap: 1em;
 
   & > :nth-child(1) {

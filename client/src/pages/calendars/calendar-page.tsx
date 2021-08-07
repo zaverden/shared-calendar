@@ -2,12 +2,12 @@ import { Page } from "@shacal/ui/components";
 import { ShacalEvent } from "@shacal/ui/data-access";
 import { usePublicIdParam, useShacal } from "@shacal/ui/hooks";
 import React, { Fragment } from "react";
-import { Link } from "@shacal/ui/kit";
+import { Link, LinkButton } from "@shacal/ui/kit";
 import { formatDate } from "utils";
 import { Permissions } from "./permissions";
 
 function AddEventLink({ publicId }: { publicId: string }) {
-  return <Link className="createNewEvent" to={`/calendar/${publicId}/new-event`}>Create New Event</Link>;
+  return <LinkButton to={`/calendar/${publicId}/new-event`}>Create New Event</LinkButton>;
 }
 
 type EventCardProps = {
@@ -16,7 +16,7 @@ type EventCardProps = {
 function EventCard({ event }: EventCardProps) {
   const d = new Date(event.start);
   return (
-    <div>
+    <div style={{ marginTop: "17px" }}>
       <Link to={`/event/${event.publicId}`}>{event.summary}</Link>
       <div>{formatDate(d)}</div>
     </div>

@@ -1,12 +1,24 @@
 import { useSaveShacalPermissions } from "hooks/useSaveShacalPermissions";
 import React, { ChangeEvent, useState } from "react";
-import { Button, Input } from "@shacal/ui/kit";
+import {Button, Input, LinkButton} from "@shacal/ui/kit";
+import styled from "@emotion/styled";
 
 type PermissionsProps = {
   publicId: string;
   addPermissionGrantedTo: string[];
   isFetching: boolean;
 };
+
+const EmailInput = styled(Input)`
+  display: block;
+  margin-bottom: 12px;
+`;
+
+const ButtonSave = styled(Button)`
+  background-color: var(--bg-s);
+  margin-top: 16px;
+  max-width: 112px;
+`;
 
 export function Permissions({
   addPermissionGrantedTo,
@@ -33,23 +45,21 @@ export function Permissions({
     <details style={{ margin: '16px 0 20px' }}>
       <summary>Granted add permission</summary>
       {list.map((p, i) => (
-        <Input
+        <EmailInput
           key={i}
           type="text"
           value={p}
           onChange={onChange(i)}
           disabled={isFetching || save.isLoading}
-          style={{ display: "block", marginBottom: "12px" }}
         />
       ))}
-      <Button
+      <ButtonSave
         type="button"
         disabled={isFetching || save.isLoading}
         onClick={onSaveClick}
-        style={{ backgroundColor: "#515151", marginTop: "16px", maxWidth: "112px" }}
       >
         Save
-      </Button>
+      </ButtonSave>
     </details>
   );
 }

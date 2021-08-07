@@ -4,9 +4,11 @@ export const COLOR_VARS = `
   --fg-m: #8D8D8D;
   --fg-b: #2E7CF6;
   --fg-placeholder: #BABABA;
+  --fc-w: #FFFFFF;
   --bg-p: #00AA98;
   --bg-s: #515151;
   --bg-m: #FFFFFF;
+  --bg-l: #00B5A1;
   --br-p: #C4C4C4;
 `;
 

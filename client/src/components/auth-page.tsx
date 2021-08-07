@@ -4,6 +4,8 @@ import { AnchorButton, H1 } from "@shacal/ui/kit";
 import styled from "@emotion/styled";
 
 const GoogleIcon = styled.img`
+  height: 1em;
+  width: 1em;
   background: var(--bg-m);
   padding: 2px;
   border-radius: 100%;

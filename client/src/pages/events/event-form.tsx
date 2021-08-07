@@ -135,7 +135,7 @@ export function EventForm({ event, isSaving, onSave }: EventFormProps) {
         </div>
         <Button type="submit"
                 disabled={isSaving}
-                style={{ height: "44px", marginTop: "18px", background: "#515151" }}>
+                style={{ height: "44px", marginTop: "18px", background: "var(--bg-s)" }}>
           Create event
         </Button>
       </form>

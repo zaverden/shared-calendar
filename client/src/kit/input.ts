@@ -6,9 +6,8 @@ export const Input = styled.input`
   border: 1px solid var(--br-p);
   border-radius: 4px;
   box-sizing: border-box;
-  padding: 12px;
-  margin-top: 5px;
-  font-size: 14px;
+  padding: 1em;
+  font-size: var(--fs-m);
   background: transparent;
 
   &::placeholder {

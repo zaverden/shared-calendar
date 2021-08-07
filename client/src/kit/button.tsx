@@ -26,9 +26,9 @@ export const Button = styled("button", {
   text-decoration: none;
   cursor: pointer;
   color: #fff;
-  border: none;
+  border: 0;
   border-radius: 4px;
-  font-weight: var(--fw-th);
+  font-weight: var(--fw-b);
   background-color: ${({ secondary }) => bg(secondary)};
   padding: ${({ medium: medium }) => (medium ? "8px" : "10px")};
   opacity: ${({ disabled }) => (!disabled ? 1 : 0.5)};
