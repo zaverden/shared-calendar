@@ -7,6 +7,7 @@ export function DescriptionView({ description }: { description: string }) {
   return (
     <div
       className="ql-editor"
+      style={{ fontWeight: "var(--fw-default)", fontSize: "var(--fs-xl)", color: "var(--fg-p)" }}
       dangerouslySetInnerHTML={{ __html: sanitized }}
     />
   );

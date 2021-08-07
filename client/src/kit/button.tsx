@@ -32,6 +32,11 @@ export const Button = styled("button", {
   background-color: ${({ secondary }) => bg(secondary)};
   padding: ${({ medium: medium }) => (medium ? "8px" : "10px")};
   opacity: ${({ disabled }) => (!disabled ? 1 : 0.5)};
+  transition: 0.3s;
+
+  &:hover {
+    box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2);
+  }
 `;
 
 export const LinkButton = Button.withComponent(Link);

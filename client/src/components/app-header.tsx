@@ -18,7 +18,7 @@ const Slogan = styled.p`
   width: fit-content;
   font-size: var(--fs-s);
   line-height: 2em;
-
+  
   & > span {
     color: var(--fg-a);
     font-weight: var(--fw-b);

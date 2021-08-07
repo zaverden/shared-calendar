@@ -2,12 +2,12 @@ import { Page } from "@shacal/ui/components";
 import { ShacalEvent } from "@shacal/ui/data-access";
 import { usePublicIdParam, useShacal } from "@shacal/ui/hooks";
 import React, { Fragment } from "react";
-import { Link } from "@shacal/ui/kit";
+import { Link, LinkButton } from "@shacal/ui/kit";
 import { formatDate } from "utils";
 import { Permissions } from "./permissions";
 
 function AddEventLink({ publicId }: { publicId: string }) {
-  return <Link to={`/calendar/${publicId}/new-event`}>+ Add event</Link>;
+  return <LinkButton to={`/calendar/${publicId}/new-event`}>Create New Event</LinkButton>;
 }
 
 type EventCardProps = {
@@ -16,7 +16,7 @@ type EventCardProps = {
 function EventCard({ event }: EventCardProps) {
   const d = new Date(event.start);
   return (
-    <div>
+    <div style={{ marginTop: "17px" }}>
       <Link to={`/event/${event.publicId}`}>{event.summary}</Link>
       <div>{formatDate(d)}</div>
     </div>
@@ -35,6 +35,7 @@ export function CalendarPage() {
     >
       {() => (
         <Fragment>
+          {shacal.data?.canAdd ? <AddEventLink publicId={publicId} /> : null}
           {shacal.data?.owned ? (
             <Permissions
               publicId={publicId}
@@ -42,8 +43,7 @@ export function CalendarPage() {
               addPermissionGrantedTo={shacal.data.addPermissionGrantedTo ?? []}
             />
           ) : null}
-          {shacal.data?.canAdd ? <AddEventLink publicId={publicId} /> : null}
-          <ul>
+          <ul style={{ padding: "0", marginTop: "0" }}>
             {shacal.data?.events.map((event) => (
               <EventCard key={event.publicId} event={event} />
             ))}
